@@ -12,6 +12,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -28,17 +29,17 @@ public class Controller {
 	 * 
 	 */
 	@FXML
-	private ImageView imgWoman;
+	private ImageView womanAvatar;
 	/**
 	 * 
 	 */
 	@FXML
-	private ImageView imgMan;
+	private ImageView manAvatar;
 	/**
 	 * 
 	 */
 	@FXML
-	private ImageView imgUnspecified;
+	private ImageView unspecifiedAvatar;
 	//PERSONAL INFORMATION
 	/**
 	 * 
@@ -92,6 +93,38 @@ public class Controller {
 	private Button btnDeleteStudent;
 	
 	//EXERCISES
+	//AEROBIC LABELS
+	/**
+	 * 
+	 */
+	@FXML
+	private Label lblDate;
+	/**
+	 * 
+	 */
+	@FXML
+	private Label lblExerciseName;
+	/**
+	 * 
+	 */
+	@FXML
+	private Label lblDuration;
+	//AEROBIC
+	/**
+	 * 
+	 */
+	@FXML
+	private Label lblMaxHRorSets;
+	/**
+	 * 
+	 */
+	@FXML
+	private Label lblAvgHRorReps;
+	/**
+	 * 
+	 */
+	@FXML
+	private Label lblDistanceorWeightLifted;
 	/**
 	 * 
 	 */
@@ -126,17 +159,17 @@ public class Controller {
 	 * 
 	 */
 	@FXML
-	private TextField txtMaxHR;
+	private TextField txtMaxHRorSets;
 	/**
 	 * 
 	 */
 	@FXML
-	private TextField txtAvgHR;
+	private TextField txtAvgHRorReps;
 	/**
 	 * 
 	 */
 	@FXML
-	private TextField txtExerciseDistance;
+	private TextField txtDistanceorWeightLifted;
 	/**
 	 * 
 	 */
@@ -166,32 +199,69 @@ public class Controller {
 	private ExerciseStrength exerciseStrength= new ExerciseStrength();
 
 	// METHODS
-	//IF GENDER IS GIRL WHEN LOADING...BRING UP PICTURE OF FITNESS GIRL ANIMATED. SAME WITH BOY
 	/**
 	 * 
 	 */
 	public final void initialize() {
+//disables all buttons until appropriate criteria is given
 		btnSaveStudent.setDisable(true);
 		btnLoadStudent.setDisable(true);
 		btnDeleteStudent.setDisable(true);
-		
+//adds all gender values
 		choiceGender.getItems().addAll(Gender.values());
-		imgWoman.setVisible(false);
-		imgMan.setVisible(false);
-		imgUnspecified.setVisible(false);
+//sets invisible all avatars
+		womanAvatar.setVisible(false);
+		manAvatar.setVisible(false);
+		unspecifiedAvatar.setVisible(false);
+		
+//sets text of exercise labels
+		lblDate.setText("Date");
+		lblExerciseName.setText("Name of Exercise");
+		lblDuration.setText("Duration");
+		txtExerciseDuration.setPromptText("(minutes)");
+//sets text of aerobic exercise labels and prompt text of text fields as needed
+		exerciseGroup.selectToggle(radioAerobic);
+		lblMaxHRorSets.setText("Max Heart Rate");
+		txtMaxHRorSets.setPromptText("BPM");
+		lblAvgHRorReps.setText("Avg Heart Rate");
+		txtAvgHRorReps.setPromptText("BPM");
+		lblDistanceorWeightLifted.setText("Distance");
+		txtDistanceorWeightLifted.setPromptText("(miles)");
 		
 //adds listener to all double text fields to stop anything other than numbers from entering
 		addDoubleListener(txtStudentID);
 		addDoubleListener(txtHeight);
 		addDoubleListener(txtWeight);
 		addDoubleListener(txtExerciseDuration);
-		addDoubleListener(txtMaxHR);
-		addDoubleListener(txtAvgHR);
-		addDoubleListener(txtExerciseDistance);
+		addDoubleListener(txtMaxHRorSets);
+		addDoubleListener(txtAvgHRorReps);
+		addDoubleListener(txtDistanceorWeightLifted);
 //adds listener to all String text fields
 		addStringListener(txtFirstName);
 		addStringListener(txtLastName);
 		addStringListener(txtExerciseName);
+	}
+	
+	/**
+	 * 
+	 */
+	@FXML
+	private void weightLifted() {
+		if (exerciseGroup.getSelectedToggle().equals(radioWeights)) {
+			lblMaxHRorSets.setText("Sets");
+			txtMaxHRorSets.setPromptText("");
+			lblAvgHRorReps.setText("Reps");
+			txtAvgHRorReps.setPromptText("");
+			lblDistanceorWeightLifted.setText("Weight Lifted");
+			txtDistanceorWeightLifted.setPromptText("lbs");
+		} else {
+			lblMaxHRorSets.setText("Max Heart Rate");
+			txtMaxHRorSets.setPromptText("BPM");
+			lblAvgHRorReps.setText("Avg Heart Rate");
+			txtAvgHRorReps.setPromptText("BPM");
+			lblDistanceorWeightLifted.setText("Distance");
+			txtDistanceorWeightLifted.setPromptText("(miles)");
+		}
 	}
 	
 	/**
@@ -244,6 +314,7 @@ public class Controller {
 		} else if (exerciseGroup.getSelectedToggle().equals(radioWeights)){
 			radioAerobic.setSelected(false);
 		}
+		weightLifted();
 	}
 	
 	/**
@@ -326,21 +397,21 @@ public class Controller {
 	@FXML
 	public void displayGender() {
 		if (choiceGender.getSelectionModel().getSelectedItem().equals(Gender.UNSPECIFIED)) {
-			imgUnspecified.setVisible(true);
-			imgWoman.setVisible(false);
-			imgMan.setVisible(false);
+			unspecifiedAvatar.setVisible(true);
+			womanAvatar.setVisible(false);
+			manAvatar.setVisible(false);
 		} else if (choiceGender.getSelectionModel().getSelectedItem().equals(Gender.FEMALE)) {
-			imgWoman.setVisible(true);
-			imgUnspecified.setVisible(false);
-			imgMan.setVisible(false);
+			womanAvatar.setVisible(true);
+			unspecifiedAvatar.setVisible(false);
+			manAvatar.setVisible(false);
 		} else if (choiceGender.getSelectionModel().getSelectedItem().equals(Gender.MALE)) {
-			imgMan.setVisible(true);
-			imgUnspecified.setVisible(false);
-			imgWoman.setVisible(false);
+			manAvatar.setVisible(true);
+			unspecifiedAvatar.setVisible(false);
+			womanAvatar.setVisible(false);
 		} else {
-			imgUnspecified.setVisible(false);
-			imgWoman.setVisible(false);
-			imgMan.setVisible(false);
+			unspecifiedAvatar.setVisible(false);
+			womanAvatar.setVisible(false);
+			manAvatar.setVisible(false);
 		}
 	}
 
@@ -390,9 +461,9 @@ public class Controller {
 
 			myPerson.save();
 			clear();
-			imgMan.setVisible(false);
-			imgWoman.setVisible(false);
-			imgUnspecified.setVisible(false);
+			manAvatar.setVisible(false);
+			womanAvatar.setVisible(false);
+			unspecifiedAvatar.setVisible(false);
 
 			// confirmation of save
 			Alert confirm = new Alert(AlertType.CONFIRMATION);
@@ -420,9 +491,9 @@ public class Controller {
 			} else {
 				myPerson.delete();
 				clear();
-				imgMan.setVisible(false);
-				imgWoman.setVisible(false);
-				imgUnspecified.setVisible(false);
+				manAvatar.setVisible(false);
+				womanAvatar.setVisible(false);
+				unspecifiedAvatar.setVisible(false);
 			}
 		} catch (IllegalArgumentException e) {
 			// alert box for if toyID is not found in db
