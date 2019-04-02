@@ -2,6 +2,8 @@ package controller;
 
 import java.util.Optional;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -13,6 +15,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import model.ExerciseAerobic;
 import model.ExerciseStrength;
@@ -31,6 +34,11 @@ public class Controller {
 	 */
 	@FXML
 	private ImageView imgMan;
+	/**
+	 * 
+	 */
+	@FXML
+	private ImageView imgUnspecified;
 	//PERSONAL INFORMATION
 	/**
 	 * 
@@ -88,6 +96,11 @@ public class Controller {
 	 * 
 	 */
 	@FXML
+	private ToggleGroup exerciseGroup;
+	/**
+	 * 
+	 */
+	@FXML
 	private RadioButton radioAerobic;
 	/**
 	 * 
@@ -108,7 +121,7 @@ public class Controller {
 	 * 
 	 */
 	@FXML
-	private TextField txtDuration;
+	private TextField txtExerciseDuration;
 	/**
 	 * 
 	 */
@@ -158,21 +171,177 @@ public class Controller {
 	 * 
 	 */
 	public final void initialize() {
+		btnSaveStudent.setDisable(true);
+		btnLoadStudent.setDisable(true);
+		btnDeleteStudent.setDisable(true);
+		
 		choiceGender.getItems().addAll(Gender.values());
-		choiceGender.setValue(Gender.UNSPECIFIED);
+		imgWoman.setVisible(false);
+		imgMan.setVisible(false);
+		imgUnspecified.setVisible(false);
+		
+//adds listener to all double text fields to stop anything other than numbers from entering
+		addDoubleListener(txtStudentID);
+		addDoubleListener(txtHeight);
+		addDoubleListener(txtWeight);
+		addDoubleListener(txtExerciseDuration);
+		addDoubleListener(txtMaxHR);
+		addDoubleListener(txtAvgHR);
+		addDoubleListener(txtExerciseDistance);
+//adds listener to all String text fields
+		addStringListener(txtFirstName);
+		addStringListener(txtLastName);
+		addStringListener(txtExerciseName);
+	}
+	
+	/**
+	 *  String Listener for String TextFields to only accept characters for input.
+	 * @param textField is a general TextField and this method will be called by 
+	 * all TextFields with String input.
+	 */
+	private void addStringListener(final TextField textField) {
+		textField.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(final ObservableValue<? extends String> observable, final String oldValue, 
+					final String newValue) {
+			// HOW IT WORKS
+			// if newValue does not match \w (all letters and numbers) , then whitespace , then all letters and numbers
+			// set newValue text to replace anything that is not in the set below (all letters, numbers, and whitespace)
+				if (!newValue.matches("\\w*( )?\\w*")) {
+					textField.setText(newValue.replaceAll("[^\\w ]", ""));
+				}
+ 			}
+		});
+	}
+	
+	/**
+	 *  Double Listener for TextFields to only accept numbers for input.
+	 * @param textField is a general TextField and this method will be 
+	 * called by all TextFields that require numerical input.
+	 */
+	private void addDoubleListener(final TextField textField) {
+		textField.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(final ObservableValue<? extends String> observable, final String oldValue, 
+					final String newValue) {
+				// HOW IT WORKS
+				// if newValue does not match \d (digits 0-9), a period, and \d (digits 0-9)
+				// set newValue to replace anything that is not in the set below (\d)
+				if (!newValue.matches("\\d*(\\.)?\\d*")) {
+					textField.setText(newValue.replaceAll("[^\\d.]", ""));
+				}
+			}
+		});
+	}
+	
+	/**
+	 * 
+	 */
+	@FXML
+	private void toggle() {
+		if (exerciseGroup.getSelectedToggle().equals(radioAerobic)) {
+			radioWeights.setSelected(false);
+		} else if (exerciseGroup.getSelectedToggle().equals(radioWeights)){
+			radioAerobic.setSelected(false);
+		}
 	}
 	
 	/**
 	 * Clears all fields after a save or delete.
 	 */
-	public void handleClear() {
+	public void clear() {
 		txtStudentID.clear();
 		txtFirstName.clear();
 		txtLastName.clear();
-		choiceGender.setValue(Gender.UNSPECIFIED);
+		choiceGender.setValue(null);
 		txtHeight.clear();
 		txtWeight.clear();
 		txtBirthdate.setValue(null);
+		txtStudentID.requestFocus();
+	}
+	
+	/**
+	 * This method is an error-checking methodology that will disable the "Save" button
+	 * until all information is entered or selected in the form.
+	 */
+	@FXML
+	private void disableSave() {
+		if (txtStudentID.getText().isEmpty() 
+				|| txtFirstName.getText().isEmpty()
+				|| txtLastName.getText().isEmpty() 
+				|| txtHeight.getText().isEmpty()
+				|| txtWeight.getText().isEmpty())
+//				|| txtBirthdate.getValue().equals("")) 
+			{
+			btnSaveStudent.setDisable(true);
+		} else {
+			btnSaveStudent.setDisable(false);
+		}
+	}
+	
+	/**
+	 * This method is an error-checking methodology that will disable 
+	 * the "Load Student" button until a Student ID has been entered
+	 * to be loaded if it is a valid ID number.
+	 */
+	@FXML
+	private void disableLoadStudent() {
+		if (txtStudentID.getText().isEmpty()) {
+			btnLoadStudent.setDisable(true);
+		} else {
+			btnLoadStudent.setDisable(false);
+		}
+	}
+	
+	/**
+	 * This method is an error-checking methodology that will disable 
+	 * the "Delete Student" button until a Student ID has been entered to 
+	 * be potentially deleted.
+	 */
+	@FXML
+	private void disableDeleteStudent() {
+		if (txtStudentID.getText().isEmpty()) {
+			btnDeleteStudent.setDisable(true);
+		} else {
+			btnDeleteStudent.setDisable(false);
+		}
+	}
+	
+	/**
+	 * This is a method that calls the three methods that disable the save, load,
+	 * and delete buttons in the form. Since some TextFields require more than one
+	 * of these methods to be called for their proper validation, this is a method that
+	 * contains them all so it can be easily accessed and maintained.
+	 */
+	@FXML
+	private void disableButtons() {
+		disableSave();
+		disableDeleteStudent();
+		disableLoadStudent();
+	}
+	
+	/**
+	 * 	Display picture of corresponding gender when student is loaded
+	 */
+	@FXML
+	public void displayGender() {
+		if (choiceGender.getSelectionModel().getSelectedItem().equals(Gender.UNSPECIFIED)) {
+			imgUnspecified.setVisible(true);
+			imgWoman.setVisible(false);
+			imgMan.setVisible(false);
+		} else if (choiceGender.getSelectionModel().getSelectedItem().equals(Gender.FEMALE)) {
+			imgWoman.setVisible(true);
+			imgUnspecified.setVisible(false);
+			imgMan.setVisible(false);
+		} else if (choiceGender.getSelectionModel().getSelectedItem().equals(Gender.MALE)) {
+			imgMan.setVisible(true);
+			imgUnspecified.setVisible(false);
+			imgWoman.setVisible(false);
+		} else {
+			imgUnspecified.setVisible(false);
+			imgWoman.setVisible(false);
+			imgMan.setVisible(false);
+		}
 	}
 
 	/**
@@ -190,6 +359,8 @@ public class Controller {
 			txtHeight.setText(String.valueOf(myPerson.getHeight()));
 			txtWeight.setText(String.valueOf(myPerson.getWeight()));
 			txtBirthdate.setValue(myPerson.getBirthdate());
+			
+			displayGender();
 
 		} catch (IllegalArgumentException e) {
 			// alert box for if studentID is not found in db
@@ -201,7 +372,7 @@ public class Controller {
 		}
 
 	}
-
+	
 	/**
 	 * Saves a new students information to the database.
 	 * Repeated student information will be overwrote with the most recent save.
@@ -218,7 +389,10 @@ public class Controller {
 			myPerson.setBirthdate(txtBirthdate.getValue());
 
 			myPerson.save();
-			handleClear();
+			clear();
+			imgMan.setVisible(false);
+			imgWoman.setVisible(false);
+			imgUnspecified.setVisible(false);
 
 			// confirmation of save
 			Alert confirm = new Alert(AlertType.CONFIRMATION);
@@ -245,7 +419,10 @@ public class Controller {
 				deleteMessage.close();
 			} else {
 				myPerson.delete();
-				handleClear();
+				clear();
+				imgMan.setVisible(false);
+				imgWoman.setVisible(false);
+				imgUnspecified.setVisible(false);
 			}
 		} catch (IllegalArgumentException e) {
 			// alert box for if toyID is not found in db
