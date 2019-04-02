@@ -4,10 +4,6 @@ import java.time.Duration;
 import java.time.LocalDate;
 
 /*
-+ <<get/set>> # studentID : int
-+ <<get/set>> # exerciseDate : LocalDate
-+ <<get/set>> # exerciseName : String
-+ <<get/set>> # exerciseDuration : Duration
 
 + abstract void load( studentID: int,
  exerciseDate : LocalDate,

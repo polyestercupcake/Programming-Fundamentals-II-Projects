@@ -10,47 +10,154 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import model.ExerciseAerobic;
+import model.ExerciseStrength;
 import model.Gender;
 import model.Person;
 
 public class Controller {
-
+	//FIELDS
+	/**
+	 * 
+	 */
+	@FXML
+	private ImageView imgWoman;
+	/**
+	 * 
+	 */
+	@FXML
+	private ImageView imgMan;
+	//PERSONAL INFORMATION
+	/**
+	 * 
+	 */
 	@FXML
 	private TextField txtStudentID;
-
+	/**
+	 * 
+	 */
 	@FXML
 	private TextField txtFirstName;
-
+	/**
+	 * 
+	 */
 	@FXML
 	private TextField txtLastName;
-
+	/**
+	 * 
+	 */
 	@FXML
 	private ComboBox<Gender> choiceGender;
-
+	/**
+	 * 
+	 */
 	@FXML
 	private TextField txtHeight;
-
+	/**
+	 * 
+	 */
 	@FXML
 	private TextField txtWeight;
-
+	/**
+	 * 
+	 */
 	@FXML
 	private DatePicker txtBirthdate;
-
+	/**
+	 * 
+	 */
 	@FXML
 	private Button btnLoadStudent;
-
+	/**
+	 * 
+	 */
 	@FXML
 	private Button btnSaveStudent;
-
+	/**
+	 * 
+	 */
 	@FXML
 	private Button btnDeleteStudent;
-
+	
+	//EXERCISES
+	/**
+	 * 
+	 */
+	@FXML
+	private RadioButton radioAerobic;
+	/**
+	 * 
+	 */
+	@FXML
+	private RadioButton radioWeights;
+	/**
+	 * 
+	 */
+	@FXML
+	private DatePicker txtExerciseDate;
+	/**
+	 * 
+	 */
+	@FXML
+	private TextField txtExerciseName;
+	/**
+	 * 
+	 */
+	@FXML
+	private TextField txtDuration;
+	/**
+	 * 
+	 */
+	@FXML
+	private TextField txtMaxHR;
+	/**
+	 * 
+	 */
+	@FXML
+	private TextField txtAvgHR;
+	/**
+	 * 
+	 */
+	@FXML
+	private TextField txtExerciseDistance;
+	/**
+	 * 
+	 */
+	@FXML
+	private Button btnAddExercise;
+	/**
+	 * 
+	 */
+	@FXML
+	private Button btnRemoveExercise;
+	/**
+	 * 
+	 */
+	@FXML
+	private TableView<String> exerciseTable;
+	/**
+	 * 
+	 */
 	private Person myPerson = new Person();
+	/**
+	 * 
+	 */
+	private ExerciseAerobic exerciseAerobic = new ExerciseAerobic();
+	/**
+	 * 
+	 */
+	private ExerciseStrength exerciseStrength= new ExerciseStrength();
 
 	// METHODS
+	//IF GENDER IS GIRL WHEN LOADING...BRING UP PICTURE OF FITNESS GIRL ANIMATED. SAME WITH BOY
+	/**
+	 * 
+	 */
 	public final void initialize() {
-		// choiceGender.setItems(Gender.values());
 		choiceGender.getItems().addAll(Gender.values());
 		choiceGender.setValue(Gender.UNSPECIFIED);
 	}
@@ -149,5 +256,20 @@ public class Controller {
 			studentIDNotFound.showAndWait();
 		}
 	}
-
+	
+	/**
+	 * 
+	 */
+	@FXML
+	public void handleAddExercise() {
+		
+	}
+	
+	/**
+	 * 
+	 */
+	@FXML
+	public void handleRemoveExercise() {
+		
+	}
 }
