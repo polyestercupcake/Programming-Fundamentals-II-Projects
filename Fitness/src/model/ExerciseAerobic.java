@@ -1,11 +1,33 @@
 package model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import db.Database;
+import db.Parameter;
+
+/**
+ * 
+ * @author Tanner's Laptop
+ *
+ */
 public class ExerciseAerobic extends Exercise {
 	
+	/**
+	 * 
+	 */
 	private int maxHeartRate;
+	/**
+	 * 
+	 */
 	private int averageHeartRate;
+	/**
+	 * 
+	 */
 	private double distance;
 
 	/**
@@ -18,7 +40,7 @@ public class ExerciseAerobic extends Exercise {
 	/**
 	 * @param maxHeartRate the maxHeartRate to set
 	 */
-	public final void setMaxHeartRate(int maxHeartRate) {
+	public final void setMaxHeartRate(final int maxHeartRate) {
 		this.maxHeartRate = maxHeartRate;
 	}
 
@@ -32,7 +54,7 @@ public class ExerciseAerobic extends Exercise {
 	/**
 	 * @param averageHeartRate the averageHeartRate to set
 	 */
-	public final void setAverageHeartRate(int averageHeartRate) {
+	public final void setAverageHeartRate(final int averageHeartRate) {
 		this.averageHeartRate = averageHeartRate;
 	}
 
@@ -46,26 +68,84 @@ public class ExerciseAerobic extends Exercise {
 	/**
 	 * @param distance the distance to set
 	 */
-	public final void setDistance(double distance) {
+	public final void setDistance(final double distance) {
 		this.distance = distance;
 	}
 
 	@Override
-	public void load(int studentID, LocalDate exerciseDate, String exerciseName) {
-		// TODO Auto-generated method stub
+	public void load(final int studentID, LocalDate exerciseDate, String exerciseName) {
+		//DONE???
+		Database db = new Database();
+		@SuppressWarnings("rawtypes")
+		List<Parameter> params = new ArrayList<>();
+		
+		try {
+			//add parameters in the required order (see campusweb cheatsheet)
+			params.add(new Parameter<Integer>(studentID));
+			
+			ResultSet rsStudent = db.getResultSet("Exercise.usp_GetAerobicExerciseByPerson", params);
+			if (rsStudent.next()) {
+				this.studentID = rsStudent.getInt("studentID");
+				this.exerciseDate = LocalDate.parse(rsStudent.getString("exerciseDate"));
+				this.exerciseName = rsStudent.getString("exerciseName");
+				this.exerciseDuration = Duration.parse(rsStudent.getString("exerciseDuration"));
+				maxHeartRate = rsStudent.getInt("maxHeartRate");
+				averageHeartRate = rsStudent.getInt("averageHeartRate");
+				distance = rsStudent.getDouble("distance");
+			} else {
+				throw new IllegalArgumentException("This aerobic exercise is not found in our database.");
+			}
+			
+	} catch (SQLException e) {
+		e.printStackTrace();
+		throw new RuntimeException("Something went wrong in loading the aerobic exercise.");
+		}	
 		
 	}
 
 	@Override
 	public void save() {
-		// TODO Auto-generated method stub
+		
+		Database db = new Database();
+		@SuppressWarnings("rawtypes")
+		List<Parameter> params = new ArrayList<>();
+
+		try {
+			//add parameters in the required order (see campusweb cheatsheet)
+			params.add(new Parameter<Integer>(studentID));
+			params.add(new Parameter<LocalDate>(exerciseDate));
+			params.add(new Parameter<String>(exerciseName));
+			params.add(new Parameter<Long>(exerciseDuration.getSeconds()));
+			params.add(new Parameter<Integer>(maxHeartRate));
+			params.add(new Parameter<Integer>(averageHeartRate));
+			params.add(new Parameter<Double>(distance));
+
+			db.executeSql("Exercise.usp_SaveExerciseAerobic", params);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Something went wrong in saving the aerobic exercise.");
+		}
 		
 	}
 
 	@Override
 	public void delete() {
-		// TODO Auto-generated method stub
+		Database db = new Database();
+		@SuppressWarnings("rawtypes")
+		List<Parameter> params = new ArrayList<>();
 		
+		try {
+			//add parameters in the required order (see campusweb cheatsheet)
+			params.add(new Parameter<Integer>(studentID));
+			params.add(new Parameter<LocalDate>(exerciseDate));
+			params.add(new Parameter<String>(exerciseName));
+		
+			db.executeSql("Exercise.usp_DeleteExerciseAerobic", params);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Something went wrong in deleting the student's aerobic exercise.");
+		}
 	}
-
 }

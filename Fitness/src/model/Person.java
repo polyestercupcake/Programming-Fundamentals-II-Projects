@@ -3,8 +3,10 @@ package model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import db.Database;
 import db.Parameter;
@@ -60,19 +62,46 @@ public class Person {
 	/**
 	 * @param studentID the studentID to set
 	 */
-	public final void setStudentID(int studentID) {
+	public final void setStudentID(final int studentID) {
 		this.studentID = studentID;
 	}
 	/**
+	 * 
 	 * @return the exercises
 	 */
 	public final List<Exercise> getExercises() {
 		return exercises;
 	}
 	/**
+	 * @return the exercises
+	 */
+	public final List<ExerciseStrength> getExercisesStrength() {
+		//lambda: stream something, filter something, collect and finish
+		return exercises
+				.stream()
+				//filter on condition that e is of type ExerciseStrength
+				.filter(e -> e instanceof ExerciseStrength)
+				.map(e -> (ExerciseStrength) e)
+				//collect back up and get back into a list
+				.collect(Collectors.toList());
+	}
+	/**
+	 * @return the exercises
+	 */
+	public final List<ExerciseAerobic> getExercisesAerobic() {
+		//lambda: stream something, filter something, collect and finish
+		return exercises
+				.stream()
+				//filter on condition that e is of type ExerciseAerobic
+				.filter(e -> e instanceof ExerciseAerobic)
+				.map(e -> (ExerciseAerobic) e)
+				//collect back up and get back into a list
+				.collect(Collectors.toList());
+	}
+	/**
 	 * @param exercises the exercises to set
 	 */
-	public final void setExercises(List<Exercise> exercises) {
+	public final void setExercises(final List<Exercise> exercises) {
 		this.exercises = exercises;
 	}
 	/**
@@ -84,7 +113,7 @@ public class Person {
 	/**
 	 * @param firstName the firstName to set
 	 */
-	public final void setFirstName(String firstName) {
+	public final void setFirstName(final String firstName) {
 		this.firstName = firstName;
 	}
 	/**
@@ -96,7 +125,7 @@ public class Person {
 	/**
 	 * @param lastName the lastName to set
 	 */
-	public final void setLastName(String lastName) {
+	public final void setLastName(final String lastName) {
 		this.lastName = lastName;
 	}
 	/**
@@ -108,7 +137,7 @@ public class Person {
 	/**
 	 * @param height the height to set
 	 */
-	public final void setHeight(double height) {
+	public final void setHeight(final double height) {
 		this.height = height;
 	}
 	/**
@@ -120,7 +149,7 @@ public class Person {
 	/**
 	 * @param weight the weight to set
 	 */
-	public final void setWeight(double weight) {
+	public final void setWeight(final double weight) {
 		this.weight = weight;
 	}
 	/**
@@ -132,8 +161,8 @@ public class Person {
 	/**
 	 * @param gender the gender to set
 	 */
-	public final void setGender(Gender gender) {
-		this.gender = gender;
+	public final void setGender(Gender genderr) {
+		this.gender = genderr;
 	}
 	/**
 	 * @return the birthdate
@@ -144,33 +173,18 @@ public class Person {
 	/**
 	 * @param birthdate the birthdate to set
 	 */
-	public final void setBirthdate(LocalDate birthdate) {
+	public final void setBirthdate(final LocalDate birthdate) {
 		this.birthdate = birthdate;
 	}
 	/**
 	 * 
 	 * @return
 	 */
-	public final int getAge() {
+	public final Period getAge() {
 		//year 2019...born 1999 = 20...I'm not 20
 		birthdate.getYear();
 		LocalDate.now().getYear();
-		//if month of birthdate.getYear and getMonth is > current month, do localDate.now - birthDate year - 1
-		//...else birthDate.getYear - localDate.now
-		//if (birthdate.getYear() )
-		return 0;
-	}
-	/**
-	 * 
-	 */
-	public final void addExercise(final Exercise exerciseToAdd) {
-		
-	}
-	/**
-	 * 
-	 */
-	public final void removeExercise(final int indexPositionToRemove) {
-		
+		return Period.between(birthdate, LocalDate.now());
 	}
 	/**
 	 * 
@@ -240,7 +254,6 @@ public class Person {
 		try {
 			//add parameters in the required order (see campusweb cheatsheet)
 			params.add(new Parameter<Integer>(studentID));
-		
 			db.executeSql("Exercise.usp_DeletePerson", params);
 			
 	} catch (SQLException e) {
