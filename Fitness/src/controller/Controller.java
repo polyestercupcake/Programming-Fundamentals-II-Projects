@@ -189,11 +189,6 @@ public class Controller {
 	@FXML
 	private TextField txtDistanceorWeightLifted;
 	/**
-	 * Column 1 of the TableView.
-	 */
-	@FXML
-	private TableColumn<Exercise, String> typeC1;
-	/**
 	 * Column 2 of the TableView.
 	 */
 	@FXML
@@ -257,16 +252,15 @@ public class Controller {
 	 * Sets startup information in the program when the program is ran.
 	 */
 	public final void initialize() {
-		// cannot edit the contents of the table view
+// cannot edit the contents of the table view
 		exerciseTable.setEditable(false);
-//		// imports all books into Search Author
-//		typeC1.setCellValueFactory(new PropertyValueFactory<Exercise, String>("Type"));
-//		dateC2.setCellValueFactory(new PropertyValueFactory<Exercise, LocalDate>("Date"));
-//		nameC3.setCellValueFactory(new PropertyValueFactory<Exercise, String>("Name"));
-//		durationC4.setCellValueFactory(new PropertyValueFactory<Exercise, Duration>("Duration"));
-//		maxHRorSetsC5.setCellValueFactory(new PropertyValueFactory<Exercise, Integer>("Max HR"));
-//		avgHRorRepsC6.setCellValueFactory(new PropertyValueFactory<Exercise, Integer>("Avg HR"));
-//		distanceorWeightLiftedC7.setCellValueFactory(new PropertyValueFactory<Exercise, Double>("Distance"));
+// import
+		dateC2.setCellValueFactory(new PropertyValueFactory<Exercise, LocalDate>("exerciseDate"));
+		nameC3.setCellValueFactory(new PropertyValueFactory<Exercise, String>("exerciseName"));
+		durationC4.setCellValueFactory(new PropertyValueFactory<Exercise, Duration>("exerciseDuration"));
+		maxHRorSetsC5.setCellValueFactory(new PropertyValueFactory<Exercise, Integer>("maxHeartRate"));
+		avgHRorRepsC6.setCellValueFactory(new PropertyValueFactory<Exercise, Integer>("averageHeartRate"));
+		distanceorWeightLiftedC7.setCellValueFactory(new PropertyValueFactory<Exercise, Double>("distance"));
 
 //disables all buttons until appropriate criteria is given
 		btnSaveStudent.setDisable(true);
@@ -311,7 +305,7 @@ public class Controller {
 	 * 
 	 */
 	@FXML
-	private void weightLifted() {
+	private void labelChange() {
 		if (exerciseGroup.getSelectedToggle().equals(radioStrength)) {
 			lblMaxHRorSets.setText("Sets");
 			txtMaxHRorSets.setPromptText("");
@@ -385,12 +379,7 @@ public class Controller {
 	 */
 	@FXML
 	private void toggle() {
-		if (exerciseGroup.getSelectedToggle().equals(radioAerobic)) {
-			radioStrength.setSelected(false);
-		} else if (exerciseGroup.getSelectedToggle().equals(radioStrength)) {
-			radioAerobic.setSelected(false);
-		}
-		weightLifted();
+		labelChange();
 	}
 
 	/**
@@ -413,11 +402,12 @@ public class Controller {
 	 */
 	@FXML
 	private void disableSave() {
-		if (txtStudentID.getText().isEmpty() || txtFirstName.getText().isEmpty() || txtLastName.getText().isEmpty()
-				|| txtHeight.getText().isEmpty() || txtWeight.getText().isEmpty() 
-				
-				//HELP
-				|| txtBirthdate.getValue().equals("")) {
+		if (txtStudentID.getText().isEmpty() || 
+				txtFirstName.getText().isEmpty() || 
+				txtLastName.getText().isEmpty() || 
+				txtHeight.getText().isEmpty() || 
+				txtWeight.getText().isEmpty() || 
+				txtBirthdate.getValue() == null) {
 			
 			btnSaveStudent.setDisable(true);
 		} else {
@@ -507,7 +497,12 @@ public class Controller {
 			txtBirthdate.setValue(myPerson.getBirthdate());
 
 			displayGender();
+			if (exerciseGroup.getSelectedToggle().equals(radioAerobic)) {
+				exerciseTable.getItems().addAll(exerciseAerobic.loadAerobicExercise(myPerson.getStudentID()));
+			} else {
+				exerciseTable.getItems().addAll(exerciseStrength.loadStrengthExercise(myPerson.getStudentID()));
 
+			}			
 		} catch (IllegalArgumentException e) {
 			// alert box for if studentID is not found in db
 			Alert studentIDNotFound = new Alert(AlertType.ERROR);
@@ -606,11 +601,12 @@ public class Controller {
 				confirm.setTitle("Confirmation");
 				confirm.setContentText("Your aerobic exercise" + " has been saved.");
 				confirm.showAndWait();
-				//clears table
+				//clears text fields
 				clearExerciseInfo();
+				//clears the table view
+				exerciseTable.getItems().clear();
 				//adds it to the table view
-				myPerson.getExercisesAerobic();
-				//set column data
+				exerciseTable.getItems().addAll(exerciseAerobic.loadAerobicExercise(myPerson.getStudentID()));
 			} catch (IllegalArgumentException e) {
 				Alert badLuck = new Alert(AlertType.ERROR);
 				badLuck.setTitle("ERROR");
@@ -626,6 +622,13 @@ public class Controller {
 					confirm.setTitle("Confirmation");
 					confirm.setContentText("Your weight lifting exercise" + " has been saved.");
 					confirm.showAndWait();
+					//clears text fields
+					clearExerciseInfo();
+					//clears the table view
+					exerciseTable.getItems().clear();
+					//adds it to the table view
+					exerciseTable.getItems().addAll(exerciseStrength.loadStrengthExercise(myPerson.getStudentID()));
+					
 				} catch (IllegalArgumentException e) {
 						Alert badLuck = new Alert(AlertType.ERROR);
 						badLuck.setTitle("ERROR");
@@ -678,8 +681,8 @@ public class Controller {
 	@FXML
 	public void aerobicDelete() {
 		exerciseAerobic.setStudentID(Integer.parseInt(txtStudentID.getText()));
-		exerciseAerobic.setExerciseDate(txtExerciseDate.getValue());
-		exerciseAerobic.setExerciseName(txtExerciseName.getText());
+		exerciseAerobic.setExerciseDate(exerciseTable.getSelectionModel().getSelectedItem().getExerciseDate());
+		exerciseAerobic.setExerciseName(exerciseTable.getSelectionModel().getSelectedItem().getExerciseName());
 		//deletes the exercise
 		exerciseAerobic.delete();
 	}
@@ -690,7 +693,7 @@ public class Controller {
 	 * the student's account.
 	 */
 	@FXML
-	public void weightsDelete() {
+	public void strengthDelete() {
 		exerciseStrength.setStudentID(Integer.parseInt(txtStudentID.getText()));
 		exerciseStrength.setExerciseDate(txtExerciseDate.getValue());
 		exerciseStrength.setExerciseName(txtExerciseName.getText());
@@ -704,21 +707,22 @@ public class Controller {
 	@FXML
 	public void handleRemoveExercise() {
 	try {
-		if (exerciseGroup.getSelectedToggle().equals(radioAerobic)) {	
-			// ALERT BOX
-			ButtonType yes = new ButtonType("Yes");
-			ButtonType no = new ButtonType("No");
-			Alert editable = new Alert(AlertType.NONE, "Are you sure?", yes, no);
-			editable.setTitle("Delete This Book");
-			editable.setContentText("Are you sure you want to remove this exercise? Click YES to delete"
-				+ " or NO to continue with your Fitness Tracker.");
-			editable.showAndWait().ifPresent(response -> {
-				if (response == yes) {
-					aerobicDelete();
-					clearExerciseInfo();
-				}
-			});
-		} else {
+		exerciseTable.getSelectionModel().getSelectedItem();
+			if (exerciseGroup.getSelectedToggle().equals(radioAerobic)) {	
+				// ALERT BOX
+				ButtonType yes = new ButtonType("Yes");
+				ButtonType no = new ButtonType("No");
+				Alert editable = new Alert(AlertType.NONE, "Are you sure?", yes, no);
+				editable.setTitle("Delete This Book");
+				editable.setContentText("Are you sure you want to remove this exercise? Click YES to delete"
+					+ " or NO to continue with your Fitness Tracker.");
+				editable.showAndWait().ifPresent(response -> {
+					if (response == yes) {
+						aerobicDelete();
+						clearExerciseInfo();
+					}
+				});
+			} else {
 			// ALERT BOX
 				ButtonType yes = new ButtonType("Yes");
 				ButtonType no = new ButtonType("No");
@@ -728,7 +732,7 @@ public class Controller {
 					+ " or NO to continue with your Fitness Tracker.");
 				editable.showAndWait().ifPresent(response -> {
 					if (response == yes) {
-						weightsDelete();
+						strengthDelete();
 						clearExerciseInfo();
 					}
 				});	
@@ -751,6 +755,13 @@ public class Controller {
 	 */
 	@FXML
 	public void populateExerciseInfo() {
+		exerciseTable.getSelectionModel().getSelectedItem();
+		//txtExerciseDate.setValue(dateC2.getText());
+		txtExerciseName.setText(nameC3.getText());
+		txtExerciseDuration.setText(durationC4.getText());
+			txtMaxHRorSets.setText(maxHRorSetsC5.getText());
+			txtAvgHRorReps.setText(avgHRorRepsC6.getText());
+			txtDistanceorWeightLifted.setText(distanceorWeightLiftedC7.getText());
 		
 	}
 }

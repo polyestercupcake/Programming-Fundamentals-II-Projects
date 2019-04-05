@@ -3,15 +3,6 @@ package model;
 import java.time.Duration;
 import java.time.LocalDate;
 
-/*
-
-+ abstract void load( studentID: int,
- exerciseDate : LocalDate,
- exerciseName : String )
-+ abstract void save()
-+ abstract void delete()
-
-*/
 public abstract class Exercise {
 	//FIELDS
 	//made protected so anyone who inherits exercise can access these fields

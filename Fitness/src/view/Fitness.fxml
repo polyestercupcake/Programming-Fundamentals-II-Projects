@@ -99,10 +99,10 @@
             <TextField fx:id="txtStudentID" onKeyPressed="#disableButtons" onKeyReleased="#disableButtons" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="txtFirstName" onKeyPressed="#disableSave" onKeyReleased="#disableSave" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="txtLastName" onKeyPressed="#disableSave" onKeyReleased="#disableSave" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <ComboBox fx:id="choiceGender" prefHeight="25.0" prefWidth="202.0" promptText="Please choose a gender" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <ComboBox fx:id="choiceGender" onAction="#disableSave" prefHeight="25.0" prefWidth="202.0" promptText="Please choose a gender" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <TextField fx:id="txtHeight" onKeyPressed="#disableSave" onKeyReleased="#disableSave" promptText="feet (.) inches" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <TextField fx:id="txtWeight" onKeyPressed="#disableSave" onKeyReleased="#disableSave" promptText="lbs" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <DatePicker fx:id="txtBirthdate" onKeyTyped="#disableSave" prefHeight="25.0" prefWidth="206.0" promptText="M/DD/YYYY" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <DatePicker fx:id="txtBirthdate" onKeyPressed="#disableSave" onKeyReleased="#disableSave" onMouseClicked="#disableSave" prefHeight="25.0" prefWidth="206.0" promptText="M/DD/YYYY" GridPane.columnIndex="1" GridPane.rowIndex="7" />
             <Button fx:id="btnLoadStudent" alignment="CENTER" mnemonicParsing="false" onAction="#handleLoad" prefHeight="25.0" prefWidth="161.0" style="-fx-background-color: gray; -fx-text-fill: white;" text="Load Student" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="10.0" />
@@ -156,7 +156,7 @@
                   <Font name="Serif Regular" size="18.0" />
                </font>
             </Label>
-            <RadioButton fx:id="radioAerobic" mnemonicParsing="false" onMouseClicked="#toggle" text="Aerobic" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+            <RadioButton fx:id="radioAerobic" mnemonicParsing="false" onAction="#toggle" onMouseClicked="#toggle" text="Aerobic" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <font>
                   <Font name="Serif Regular" size="18.0" />
                </font>
@@ -164,7 +164,7 @@
                   <ToggleGroup fx:id="exerciseGroup" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="radioWeights" mnemonicParsing="false" onMouseClicked="#toggle" text="Weight Lifting" toggleGroup="$exerciseGroup" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <RadioButton fx:id="radioStrength" mnemonicParsing="false" onAction="#toggle" onMouseClicked="#toggle" text="Weight Lifting" toggleGroup="$exerciseGroup" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <font>
                   <Font name="Serif Regular" size="18.0" />
                </font>
@@ -216,15 +216,14 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <TableView fx:id="exerciseTable" prefHeight="223.0" prefWidth="474.0" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.rowSpan="8">
+            <TableView fx:id="exerciseTable" onMouseClicked="#populateExerciseInfo" prefHeight="223.0" prefWidth="474.0" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.rowSpan="8">
               <columns>
-                <TableColumn fx:id="exerciseType" prefWidth="49.66668701171875" text="Type" />
                 <TableColumn fx:id="dateC2" prefWidth="65.0" text="Date" />
-                  <TableColumn fx:id="nameC3" prefWidth="87.0" text="Name" />
+                  <TableColumn fx:id="nameC3" prefWidth="128.0" text="Name" />
                   <TableColumn fx:id="durationC4" prefWidth="69.0" text="Duration" />
-                  <TableColumn fx:id="maxHRorSetsC5" prefWidth="58.0" text="Max HR" />
-                  <TableColumn fx:id="avgHRorRepsC6" prefWidth="58.0" text="Avg HR" />
-                  <TableColumn fx:id="distanceorWeightLiftedC7" prefWidth="88.0" text="Distance" />
+                  <TableColumn fx:id="maxHRorSetsC5" prefWidth="64.0" text="Max HR" />
+                  <TableColumn fx:id="avgHRorRepsC6" prefWidth="65.0" text="Avg HR" />
+                  <TableColumn fx:id="distanceorWeightLiftedC7" prefWidth="82.0" text="Distance" />
               </columns>
             </TableView>
          </children>

@@ -73,33 +73,40 @@ public class ExerciseAerobic extends Exercise {
 	}
 
 	@Override
-	public void load(final int studentID, LocalDate exerciseDate, String exerciseName) {
-		//DONE???
+	public void load(int studentID, LocalDate exerciseDate, String exerciseName) {
+		
+	}
+	public List<ExerciseAerobic> loadAerobicExercise(final int studentID) {
+
 		Database db = new Database();
 		@SuppressWarnings("rawtypes")
 		List<Parameter> params = new ArrayList<>();
+		List<ExerciseAerobic> exerciseAerobic = new ArrayList<>();
 		
 		try {
 			//add parameters in the required order (see campusweb cheatsheet)
 			params.add(new Parameter<Integer>(studentID));
 			
-			ResultSet rsStudent = db.getResultSet("Exercise.usp_GetAerobicExerciseByPerson", params);
-			if (rsStudent.next()) {
-				this.studentID = rsStudent.getInt("studentID");
-				this.exerciseDate = LocalDate.parse(rsStudent.getString("exerciseDate"));
-				this.exerciseName = rsStudent.getString("exerciseName");
-				this.exerciseDuration = Duration.parse(rsStudent.getString("exerciseDuration"));
-				maxHeartRate = rsStudent.getInt("maxHeartRate");
-				averageHeartRate = rsStudent.getInt("averageHeartRate");
-				distance = rsStudent.getDouble("distance");
-			} else {
-				throw new IllegalArgumentException("This aerobic exercise is not found in our database.");
+			ResultSet rsStudent = db.getResultSet("Exercise.usp_GetAerobicExercisesByPerson", params);
+			while (rsStudent.next()) {
+				ExerciseAerobic exAero = new ExerciseAerobic();
+				exAero.setStudentID(rsStudent.getInt("studentID"));
+				exAero.setExerciseDate(LocalDate.parse(rsStudent.getString("exerciseDate")));
+				exAero.setExerciseName(rsStudent.getString("exerciseName"));
+				//puts seconds as a weird format
+				exAero.setExerciseDuration(Duration.ofSeconds(Integer.parseInt(rsStudent.getString("exerciseSeconds"))));
+				exAero.setMaxHeartRate(rsStudent.getInt("maxHeartRate"));
+				exAero.setAverageHeartRate(rsStudent.getInt("averageHeartRate"));
+				exAero.setDistance(rsStudent.getDouble("distance"));
+				
+				exerciseAerobic.add(exAero);
 			}
 			
 	} catch (SQLException e) {
 		e.printStackTrace();
 		throw new RuntimeException("Something went wrong in loading the aerobic exercise.");
-		}	
+		}
+		return exerciseAerobic;	
 		
 	}
 
@@ -138,6 +145,7 @@ public class ExerciseAerobic extends Exercise {
 		try {
 			//add parameters in the required order (see campusweb cheatsheet)
 			params.add(new Parameter<Integer>(studentID));
+			//not getting either of these
 			params.add(new Parameter<LocalDate>(exerciseDate));
 			params.add(new Parameter<String>(exerciseName));
 		

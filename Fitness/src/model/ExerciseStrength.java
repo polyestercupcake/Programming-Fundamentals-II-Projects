@@ -72,36 +72,41 @@ public class ExerciseStrength extends Exercise {
 	public final void setWeightLifted(final double weightLifted) {
 		this.weightLifted = weightLifted;
 	}
-
+	
 	@Override
 	public void load(final int studentID, LocalDate exerciseDate, String exerciseName) {
-		//DONE???
+		
+	}
+
+	public List<ExerciseStrength> loadStrengthExercise(final int studentID) {
+
 		Database db = new Database();
 		@SuppressWarnings("rawtypes")
 		List<Parameter> params = new ArrayList<>();
+		List<ExerciseStrength> exerciseStrength = new ArrayList<>();
 		
 		try {
 			//add parameters in the required order (see campusweb cheatsheet)
 			params.add(new Parameter<Integer>(studentID));
+			ExerciseStrength exStr = new ExerciseStrength();
 			
-			ResultSet rsStudent = db.getResultSet("Exercise.usp_GetStrengthExerciseByPerson", params);
-			if (rsStudent.next()) {
-				this.studentID = rsStudent.getInt("studentID");
-				this.exerciseDate = LocalDate.parse(rsStudent.getString("exerciseDate"));
-				this.exerciseName = rsStudent.getString("exerciseName");
-				this.exerciseDuration = Duration.parse(rsStudent.getString("exerciseDuration"));
-				sets = rsStudent.getInt("sets");
-				reps = rsStudent.getInt("reps");
-				weightLifted = rsStudent.getDouble("weightLifted");
-			} else {
-				throw new IllegalArgumentException("This strength exercise is not found in our database.");
-			}
-			
+			ResultSet rsStudent = db.getResultSet("Exercise.usp_GetStrengthExercisesByPerson", params);
+			while (rsStudent.next()) {
+				exStr.setStudentID(rsStudent.getInt("studentID"));
+				exStr.setExerciseDate(LocalDate.parse(rsStudent.getString("exerciseDate")));
+				exStr.setExerciseName(rsStudent.getString("exerciseName"));
+				exStr.setExerciseDuration(Duration.ofSeconds(Integer.parseInt(rsStudent.getString("exerciseSeconds"))));
+				exStr.setSets(rsStudent.getInt("sets"));
+				exStr.setReps(rsStudent.getInt("reps"));
+				exStr.setWeightLifted(rsStudent.getDouble("weightLifted"));
+				
+				exerciseStrength.add(exStr);
+				}	
 	} catch (SQLException e) {
 		e.printStackTrace();
 		throw new RuntimeException("Something went wrong in loading the aerobic exercise.");
 		}	
-		
+		return exerciseStrength;
 	}
 
 	@Override
