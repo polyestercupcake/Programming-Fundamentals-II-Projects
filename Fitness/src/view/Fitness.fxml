@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
@@ -156,7 +157,7 @@
                   <Font name="Serif Regular" size="18.0" />
                </font>
             </Label>
-            <RadioButton fx:id="radioAerobic" mnemonicParsing="false" onAction="#toggle" onMouseClicked="#toggle" text="Aerobic" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+            <RadioButton fx:id="radioAerobic" mnemonicParsing="false" onAction="#labelChange" onMouseClicked="#labelChange" text="Aerobic" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <font>
                   <Font name="Serif Regular" size="18.0" />
                </font>
@@ -164,7 +165,7 @@
                   <ToggleGroup fx:id="exerciseGroup" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="radioStrength" mnemonicParsing="false" onAction="#toggle" onMouseClicked="#toggle" text="Weight Lifting" toggleGroup="$exerciseGroup" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <RadioButton fx:id="radioStrength" mnemonicParsing="false" onAction="#labelChange" onMouseClicked="#labelChange" text="Weight Lifting" toggleGroup="$exerciseGroup" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <font>
                   <Font name="Serif Regular" size="18.0" />
                </font>
@@ -230,5 +231,10 @@
       </GridPane>
       <Separator layoutX="163.0" layoutY="410.0" prefHeight="15.0" prefWidth="813.0" />
       <Separator layoutX="351.0" layoutY="93.0" prefHeight="15.0" prefWidth="628.0" />
+      <CheckBox fx:id="chkbxDarkMode" layoutX="836.0" layoutY="122.0" mnemonicParsing="false" onAction="#handleStyleChange" prefHeight="34.0" prefWidth="121.0" text="Dark Mode">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </CheckBox>
    </children>
 </AnchorPane>

@@ -73,9 +73,13 @@ public class ExerciseAerobic extends Exercise {
 	}
 
 	@Override
-	public void load(int studentID, LocalDate exerciseDate, String exerciseName) {
-		
+	public void load(final int studentID, final LocalDate exerciseDate, final String exerciseName) {	
 	}
+	/**
+	 * 
+	 * @param studentID
+	 * @return
+	 */
 	public List<ExerciseAerobic> loadAerobicExercise(final int studentID) {
 
 		Database db = new Database();
@@ -94,7 +98,8 @@ public class ExerciseAerobic extends Exercise {
 				exAero.setExerciseDate(LocalDate.parse(rsStudent.getString("exerciseDate")));
 				exAero.setExerciseName(rsStudent.getString("exerciseName"));
 				//puts seconds as a weird format
-				exAero.setExerciseDuration(Duration.ofSeconds(Integer.parseInt(rsStudent.getString("exerciseSeconds"))));
+				exAero.setExerciseDuration(Duration.ofSeconds(Integer.parseInt(
+						rsStudent.getString("exerciseSeconds"))));
 				exAero.setMaxHeartRate(rsStudent.getInt("maxHeartRate"));
 				exAero.setAverageHeartRate(rsStudent.getInt("averageHeartRate"));
 				exAero.setDistance(rsStudent.getDouble("distance"));
@@ -111,7 +116,7 @@ public class ExerciseAerobic extends Exercise {
 	}
 
 	@Override
-	public void save() {
+	public final void save() {
 		
 		Database db = new Database();
 		@SuppressWarnings("rawtypes")
@@ -137,7 +142,7 @@ public class ExerciseAerobic extends Exercise {
 	}
 
 	@Override
-	public void delete() {
+	public final void delete() {
 		Database db = new Database();
 		@SuppressWarnings("rawtypes")
 		List<Parameter> params = new ArrayList<>();

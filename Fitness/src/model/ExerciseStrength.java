@@ -74,10 +74,15 @@ public class ExerciseStrength extends Exercise {
 	}
 	
 	@Override
-	public void load(final int studentID, LocalDate exerciseDate, String exerciseName) {
+	public void load(final int studentID, final LocalDate exerciseDate, final String exerciseName) {
 		
 	}
 
+	/**
+	 * 
+	 * @param studentID
+	 * @return
+	 */
 	public List<ExerciseStrength> loadStrengthExercise(final int studentID) {
 
 		Database db = new Database();
@@ -95,7 +100,8 @@ public class ExerciseStrength extends Exercise {
 				exStr.setStudentID(rsStudent.getInt("studentID"));
 				exStr.setExerciseDate(LocalDate.parse(rsStudent.getString("exerciseDate")));
 				exStr.setExerciseName(rsStudent.getString("exerciseName"));
-				exStr.setExerciseDuration(Duration.ofSeconds(Integer.parseInt(rsStudent.getString("exerciseSeconds"))));
+				exStr.setExerciseDuration(Duration.ofSeconds(Integer.parseInt(
+						rsStudent.getString("exerciseSeconds"))));
 				exStr.setSets(rsStudent.getInt("sets"));
 				exStr.setReps(rsStudent.getInt("reps"));
 				exStr.setWeightLifted(rsStudent.getDouble("weightLifted"));
@@ -110,7 +116,7 @@ public class ExerciseStrength extends Exercise {
 	}
 
 	@Override
-	public void save() {
+	public final void save() {
 		Database db = new Database();
 		@SuppressWarnings("rawtypes")
 		List<Parameter> params = new ArrayList<>();
@@ -135,7 +141,7 @@ public class ExerciseStrength extends Exercise {
 	}
 
 	@Override
-	public void delete() {
+	public final void delete() {
 		Database db = new Database();
 		@SuppressWarnings("rawtypes")
 		List<Parameter> params = new ArrayList<>();

@@ -180,11 +180,10 @@ public class Person {
 	 * 
 	 * @return
 	 */
-	public final Period getAge() {
+	public final int getAge() {
 		//year 2019...born 1999 = 20...I'm not 20
-		birthdate.getYear();
-		LocalDate.now().getYear();
-		return Period.between(birthdate, LocalDate.now());
+		Period p =  Period.between(birthdate, LocalDate.now());
+		return p.getYears();
 	}
 	/**
 	 * 

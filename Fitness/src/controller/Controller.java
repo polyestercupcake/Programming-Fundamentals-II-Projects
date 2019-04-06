@@ -12,6 +12,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -235,6 +236,11 @@ public class Controller {
 	@FXML
 	private TableView<Exercise> exerciseTable;
 	/**
+	 * Check box that allows a dark mode to be toggled on the scene.
+	 */
+	@FXML
+	private CheckBox chkbxDarkMode;
+	/**
 	 * Instance of the Person class, dealing with the student's Personal Information.
 	 */
 	private Person myPerson = new Person();
@@ -258,9 +264,6 @@ public class Controller {
 		dateC2.setCellValueFactory(new PropertyValueFactory<Exercise, LocalDate>("exerciseDate"));
 		nameC3.setCellValueFactory(new PropertyValueFactory<Exercise, String>("exerciseName"));
 		durationC4.setCellValueFactory(new PropertyValueFactory<Exercise, Duration>("exerciseDuration"));
-		maxHRorSetsC5.setCellValueFactory(new PropertyValueFactory<Exercise, Integer>("maxHeartRate"));
-		avgHRorRepsC6.setCellValueFactory(new PropertyValueFactory<Exercise, Integer>("averageHeartRate"));
-		distanceorWeightLiftedC7.setCellValueFactory(new PropertyValueFactory<Exercise, Double>("distance"));
 
 //disables all buttons until appropriate criteria is given
 		btnSaveStudent.setDisable(true);
@@ -316,6 +319,11 @@ public class Controller {
 			maxHRorSetsC5.setText("Sets");
 			avgHRorRepsC6.setText("Reps");
 			distanceorWeightLiftedC7.setText("Wt. Lifted");
+			
+			maxHRorSetsC5.setCellValueFactory(new PropertyValueFactory<Exercise, Integer>("sets"));
+			avgHRorRepsC6.setCellValueFactory(new PropertyValueFactory<Exercise, Integer>("reps"));
+			distanceorWeightLiftedC7.setCellValueFactory(new PropertyValueFactory<Exercise, Double>(
+					"weightLifted"));
 		} else {
 			lblMaxHRorSets.setText("Max Heart Rate");
 			txtMaxHRorSets.setPromptText("BPM");
@@ -326,6 +334,12 @@ public class Controller {
 			maxHRorSetsC5.setText("Max HR");
 			avgHRorRepsC6.setText("Avg HR");
 			distanceorWeightLiftedC7.setText("Distance");
+			
+			maxHRorSetsC5.setCellValueFactory(new PropertyValueFactory<Exercise, Integer>("maxHeartRate"));
+			avgHRorRepsC6.setCellValueFactory(new PropertyValueFactory<Exercise, Integer>(
+					"averageHeartRate"));
+			distanceorWeightLiftedC7.setCellValueFactory(new PropertyValueFactory<Exercise, Double>(
+					"distance"));
 		}
 	}
 
@@ -374,15 +388,6 @@ public class Controller {
 	}
 
 	/**
-	 * Allows a toggle feature between the two radio buttons.
-	 * If one radio button is selected, the other cannot be.
-	 */
-	@FXML
-	private void toggle() {
-		labelChange();
-	}
-
-	/**
 	 * Clears personal information fields after a save or delete.
 	 */
 	public void clearPersonalInfo() {
@@ -402,12 +407,12 @@ public class Controller {
 	 */
 	@FXML
 	private void disableSave() {
-		if (txtStudentID.getText().isEmpty() || 
-				txtFirstName.getText().isEmpty() || 
-				txtLastName.getText().isEmpty() || 
-				txtHeight.getText().isEmpty() || 
-				txtWeight.getText().isEmpty() || 
-				txtBirthdate.getValue() == null) {
+		if (txtStudentID.getText().isEmpty() 
+				|| txtFirstName.getText().isEmpty() 
+				|| txtLastName.getText().isEmpty() 
+				|| txtHeight.getText().isEmpty() 
+				|| txtWeight.getText().isEmpty() 
+				|| txtBirthdate.getValue() == null) {
 			
 			btnSaveStudent.setDisable(true);
 		} else {
@@ -498,17 +503,19 @@ public class Controller {
 
 			displayGender();
 			if (exerciseGroup.getSelectedToggle().equals(radioAerobic)) {
-				exerciseTable.getItems().addAll(exerciseAerobic.loadAerobicExercise(myPerson.getStudentID()));
+				exerciseTable.getItems().addAll(exerciseAerobic.loadAerobicExercise(
+						myPerson.getStudentID()));
 			} else {
-				exerciseTable.getItems().addAll(exerciseStrength.loadStrengthExercise(myPerson.getStudentID()));
+				exerciseTable.getItems().addAll(exerciseStrength.loadStrengthExercise(
+						myPerson.getStudentID()));
 
 			}			
 		} catch (IllegalArgumentException e) {
 			// alert box for if studentID is not found in db
 			Alert studentIDNotFound = new Alert(AlertType.ERROR);
 			studentIDNotFound.setTitle("Load Error");
-			studentIDNotFound.setContentText(
-					"Your student's ID number" + " has not been found. Please try a different student ID.");
+			studentIDNotFound.setContentText("Your student's ID number" 
+			+ " has not been found. Please try a different student ID.");
 			studentIDNotFound.showAndWait();
 		}
 
@@ -552,8 +559,9 @@ public class Controller {
 			myPerson.load(Integer.parseInt(txtStudentID.getText()));
 			Alert deleteMessage = new Alert(AlertType.CONFIRMATION);
 			deleteMessage.setTitle("Confirm Deletion");
-			deleteMessage.setContentText("Are you sure you want to permanently delete this" + " student's information?"
-					+ "\nPress OK to delete or CANCEL to cancel deletion.");
+			deleteMessage.setContentText("Are you sure you want to permanently delete this" 
+			+ " student's information?"
+			+ "\nPress OK to delete or CANCEL to cancel deletion.");
 			Optional<ButtonType> result = deleteMessage.showAndWait();
 
 			if (result.get() == ButtonType.CANCEL) {
@@ -569,8 +577,8 @@ public class Controller {
 			// alert box for if toyID is not found in db
 			Alert studentIDNotFound = new Alert(AlertType.ERROR);
 			studentIDNotFound.setTitle("Deletion Error");
-			studentIDNotFound.setContentText(
-					"Your student ID number" + " has not been found. Please try a different student ID.");
+			studentIDNotFound.setContentText("Your student ID number" 
+			+ " has not been found. Please try a different student ID.");
 			studentIDNotFound.showAndWait();
 		}
 	}
@@ -606,7 +614,8 @@ public class Controller {
 				//clears the table view
 				exerciseTable.getItems().clear();
 				//adds it to the table view
-				exerciseTable.getItems().addAll(exerciseAerobic.loadAerobicExercise(myPerson.getStudentID()));
+				exerciseTable.getItems().addAll(exerciseAerobic.loadAerobicExercise(
+						myPerson.getStudentID()));
 			} catch (IllegalArgumentException e) {
 				Alert badLuck = new Alert(AlertType.ERROR);
 				badLuck.setTitle("ERROR");
@@ -627,12 +636,14 @@ public class Controller {
 					//clears the table view
 					exerciseTable.getItems().clear();
 					//adds it to the table view
-					exerciseTable.getItems().addAll(exerciseStrength.loadStrengthExercise(myPerson.getStudentID()));
+					exerciseTable.getItems().addAll(exerciseStrength.loadStrengthExercise(
+							myPerson.getStudentID()));
 					
 				} catch (IllegalArgumentException e) {
 						Alert badLuck = new Alert(AlertType.ERROR);
 						badLuck.setTitle("ERROR");
-						badLuck.setContentText("Something went wrong in saving your weight lifting exerise."
+						badLuck.setContentText("Something went wrong in saving "
+								+ "your weight lifting exerise."
 								+ " Please fix it.");
 						badLuck.showAndWait();
 				}	
@@ -714,7 +725,8 @@ public class Controller {
 				ButtonType no = new ButtonType("No");
 				Alert editable = new Alert(AlertType.NONE, "Are you sure?", yes, no);
 				editable.setTitle("Delete This Book");
-				editable.setContentText("Are you sure you want to remove this exercise? Click YES to delete"
+				editable.setContentText("Are you sure you want to remove this exercise?"
+					+ " Click YES to delete"
 					+ " or NO to continue with your Fitness Tracker.");
 				editable.showAndWait().ifPresent(response -> {
 					if (response == yes) {
@@ -728,7 +740,8 @@ public class Controller {
 				ButtonType no = new ButtonType("No");
 				Alert editable = new Alert(AlertType.NONE, "Are you sure?", yes, no);
 				editable.setTitle("Delete This Book");
-				editable.setContentText("Are you sure you want to remove this exercise? Click YES to delete"
+				editable.setContentText("Are you sure you want to remove this exercise?"
+					+ " Click YES to delete"
 					+ " or NO to continue with your Fitness Tracker.");
 				editable.showAndWait().ifPresent(response -> {
 					if (response == yes) {
@@ -756,12 +769,29 @@ public class Controller {
 	@FXML
 	public void populateExerciseInfo() {
 		exerciseTable.getSelectionModel().getSelectedItem();
-		//txtExerciseDate.setValue(dateC2.getText());
-		txtExerciseName.setText(nameC3.getText());
-		txtExerciseDuration.setText(durationC4.getText());
-			txtMaxHRorSets.setText(maxHRorSetsC5.getText());
-			txtAvgHRorReps.setText(avgHRorRepsC6.getText());
-			txtDistanceorWeightLifted.setText(distanceorWeightLiftedC7.getText());
+		txtExerciseDate.setValue(exerciseTable.getSelectionModel().getSelectedItem().getExerciseDate());
+		txtExerciseName.setText(exerciseTable.getSelectionModel().getSelectedItem().getExerciseName()
+				.toString());
+		txtExerciseDuration.setText(exerciseTable.getSelectionModel().getSelectedItem().getExerciseDuration()
+				.toString());
+		//not working
+		txtMaxHRorSets.setText(exerciseTable.getSelectionModel().getSelectedItem().toString());
+		txtAvgHRorReps.setText(exerciseTable.getSelectionModel().getSelectedItem().toString());
+		txtDistanceorWeightLifted.setText(exerciseTable.getSelectionModel().getSelectedItem().toString());
 		
 	}
+	
+	/**
+	 * Changes style to dark mode when check box is toggled.
+	 */
+	@FXML
+    private void handleStyleChange() {
+        if (chkbxDarkMode.isSelected()) {
+               txtBirthdate.getScene().getStylesheets().add("/application/dark-theme.css");
+        } else {
+               txtBirthdate.getScene().getStylesheets().remove("/application/dark-theme.css");
+        }
+
+ }
+
 }
