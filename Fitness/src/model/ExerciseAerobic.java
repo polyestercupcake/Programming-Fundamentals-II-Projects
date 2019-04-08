@@ -97,7 +97,6 @@ public class ExerciseAerobic extends Exercise {
 				exAero.setStudentID(rsStudent.getInt("studentID"));
 				exAero.setExerciseDate(LocalDate.parse(rsStudent.getString("exerciseDate")));
 				exAero.setExerciseName(rsStudent.getString("exerciseName"));
-				//puts seconds as a weird format
 				exAero.setExerciseDuration(Duration.ofSeconds(Integer.parseInt(
 						rsStudent.getString("exerciseSeconds"))));
 				exAero.setMaxHeartRate(rsStudent.getInt("maxHeartRate"));

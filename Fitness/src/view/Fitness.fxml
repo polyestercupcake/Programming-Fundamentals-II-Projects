@@ -8,6 +8,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -37,22 +39,22 @@
             <Font name="Book Antiqua" size="36.0" />
          </font>
       </Label>
-      <ImageView fx:id="womanAvatar" fitHeight="297.0" fitWidth="254.0" layoutX="609.0" layoutY="101.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView id="woman" fx:id="womanAvatar" fitHeight="258.0" fitWidth="165.0" layoutX="625.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true" styleClass="application.css">
          <image>
             <Image url="@woman.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="manAvatar" fitHeight="321.0" fitWidth="281.0" layoutX="560.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView id="man" fx:id="manAvatar" fitHeight="271.0" fitWidth="231.0" layoutX="593.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true" styleClass="application.css">
          <image>
             <Image url="@man.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="unspecifiedAvatar" fitHeight="297.0" fitWidth="254.0" layoutX="603.0" layoutY="114.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView id="unspec" fx:id="unspecifiedAvatar" fitHeight="297.0" fitWidth="254.0" layoutX="583.0" layoutY="112.0" pickOnBounds="true" preserveRatio="true" styleClass="application.css">
          <image>
             <Image url="@unspec.png" />
          </image>
       </ImageView>
-      <GridPane alignment="CENTER" layoutX="14.0" layoutY="139.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="223.0" prefWidth="655.0">
+      <GridPane alignment="CENTER" layoutX="14.0" layoutY="124.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="223.0" prefWidth="655.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="565.0" minWidth="0.0" prefWidth="84.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="542.0" minWidth="10.0" prefWidth="201.0" />
@@ -128,7 +130,7 @@
                </font></Button>
          </children>
       </GridPane>
-      <GridPane alignment="CENTER" layoutX="14.0" layoutY="447.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="223.0" prefWidth="963.0">
+      <GridPane alignment="CENTER" layoutX="14.0" layoutY="435.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="258.0" prefWidth="963.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="565.0" minWidth="0.0" prefWidth="127.33333587646484" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="542.0" minWidth="10.0" prefWidth="173.66665649414062" />
@@ -136,8 +138,8 @@
             <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="542.0" minWidth="10.0" prefWidth="484.0" />
          </columnConstraints>
          <rowConstraints>
-            <RowConstraints />
-            <RowConstraints maxHeight="52.0" minHeight="10.0" prefHeight="30.0" />
+            <RowConstraints maxHeight="30.0" minHeight="0.0" prefHeight="0.0" />
+            <RowConstraints maxHeight="52.0" minHeight="0.0" prefHeight="30.0" />
             <RowConstraints maxHeight="52.0" minHeight="0.0" prefHeight="0.0" />
             <RowConstraints maxHeight="58.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="33.0" minHeight="6.0" prefHeight="32.0" vgrow="SOMETIMES" />
@@ -217,16 +219,38 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <TableView fx:id="exerciseTable" onMouseClicked="#populateExerciseInfo" prefHeight="223.0" prefWidth="474.0" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.rowSpan="8">
-              <columns>
-                <TableColumn fx:id="dateC2" prefWidth="65.0" text="Date" />
-                  <TableColumn fx:id="nameC3" prefWidth="128.0" text="Name" />
-                  <TableColumn fx:id="durationC4" prefWidth="69.0" text="Duration" />
-                  <TableColumn fx:id="maxHRorSetsC5" prefWidth="64.0" text="Max HR" />
-                  <TableColumn fx:id="avgHRorRepsC6" prefWidth="65.0" text="Avg HR" />
-                  <TableColumn fx:id="distanceorWeightLiftedC7" prefWidth="82.0" text="Distance" />
-              </columns>
-            </TableView>
+            <TabPane prefHeight="243.0" prefWidth="489.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.rowSpan="8">
+              <tabs>
+                <Tab text="Aerobic">
+                     <content>
+                        <TableView fx:id="exerciseTable1" onMouseClicked="#populateExerciseInfo" prefHeight="200.0" prefWidth="475.0">
+                           <columns>
+                              <TableColumn fx:id="dateC21" prefWidth="102.0" text="Date" />
+                              <TableColumn fx:id="nameC31" prefWidth="91.0" text="Name" />
+                              <TableColumn fx:id="durationC41" prefWidth="69.0" text="Duration" />
+                              <TableColumn fx:id="maxHRorSetsC51" prefWidth="64.0" text="Max HR" />
+                              <TableColumn fx:id="avgHRorRepsC61" prefWidth="78.0" text="Avg HR" />
+                              <TableColumn fx:id="distanceorWeightLiftedC71" prefWidth="85.0" text="Distance" />
+                           </columns>
+                        </TableView>
+                     </content>
+                </Tab>
+                <Tab text="Strength">
+                     <content>
+                        <TableView fx:id="exerciseTable" onMouseClicked="#populateExerciseInfo" prefHeight="200.0" prefWidth="475.0">
+                          <columns>
+                            <TableColumn fx:id="dateC2" prefWidth="104.0" text="Date" />
+                              <TableColumn fx:id="nameC3" prefWidth="89.0" text="Name" />
+                              <TableColumn fx:id="durationC4" prefWidth="69.0" text="Duration" />
+                              <TableColumn fx:id="maxHRorSetsC5" prefWidth="64.0" text="Sets" />
+                              <TableColumn fx:id="avgHRorRepsC6" prefWidth="65.0" text="Reps" />
+                              <TableColumn fx:id="distanceorWeightLiftedC7" prefWidth="98.0" text="Weight Lifted" />
+                          </columns>
+                        </TableView>
+                     </content>
+                </Tab>
+              </tabs>
+            </TabPane>
          </children>
       </GridPane>
       <Separator layoutX="163.0" layoutY="410.0" prefHeight="15.0" prefWidth="813.0" />
@@ -236,5 +260,10 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </CheckBox>
+      <Label fx:id="lblUserAge" layoutX="639.0" layoutY="357.0" prefHeight="57.0" prefWidth="161.0">
+         <font>
+            <Font name="Book Antiqua Bold" size="36.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

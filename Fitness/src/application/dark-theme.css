@@ -25,3 +25,7 @@
         -fx-mid-text-color   60%
     );
 }
+
+img {
+	-fx-background-color:transparent; 
+}

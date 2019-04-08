@@ -12,43 +12,44 @@ import db.Database;
 import db.Parameter;
 
 /**
- * 
+ * This class is the business processes for all actions dealing with the student's personal
+ * information, including their housed exercises.
  * @author 217056
- *
  */
 public class Person {
 	
 	//FIELDS
 	/**
-	 * 
+	 * What is used primarily by the program to identify the student.
 	 */
 	private int studentID;
 	/**
-	 * 
+	 * Contains a list or exercises the student has according to their student ID.
 	 */
 	private List<Exercise> exercises;
 	/**
-	 * 
+	 * First name of a student.
 	 */
 	private String firstName;
 	/**
-	 * 
+	 * Last name of a student.
 	 */
 	private String lastName;
 	/**
-	 * 
+	 * Height of a student.
 	 */
 	private double height;
 	/**
-	 * 
+	 * Weight of a student.
 	 */
 	private double weight;
 	/**
-	 * 
+	 * Gender of a student. Created with the enum class.
+	 * Choices include: Male, Female, Unspecified.
 	 */
 	private Gender gender;
 	/**
-	 * 
+	 * DOB for a student.
 	 */
 	private LocalDate birthdate;
 	
@@ -66,13 +67,14 @@ public class Person {
 		this.studentID = studentID;
 	}
 	/**
-	 * 
+	 * Gets all the exercises a student has.
 	 * @return the exercises
 	 */
 	public final List<Exercise> getExercises() {
 		return exercises;
 	}
 	/**
+	 * Gets all the strength categorized exercises a student has.
 	 * @return the exercises
 	 */
 	public final List<ExerciseStrength> getExercisesStrength() {
@@ -86,6 +88,7 @@ public class Person {
 				.collect(Collectors.toList());
 	}
 	/**
+	 * Gets all the aerobic categorized exercises a student has.
 	 * @return the exercises
 	 */
 	public final List<ExerciseAerobic> getExercisesAerobic() {
@@ -161,8 +164,8 @@ public class Person {
 	/**
 	 * @param gender the gender to set
 	 */
-	public final void setGender(Gender genderr) {
-		this.gender = genderr;
+	public final void setGender(final Gender gender) {
+		this.gender = gender;
 	}
 	/**
 	 * @return the birthdate
@@ -177,8 +180,8 @@ public class Person {
 		this.birthdate = birthdate;
 	}
 	/**
-	 * 
-	 * @return
+	 * Returns the age of the user after their student account is loaded.
+	 * @return the age of the user.
 	 */
 	public final int getAge() {
 		//year 2019...born 1999 = 20...I'm not 20
@@ -186,8 +189,9 @@ public class Person {
 		return p.getYears();
 	}
 	/**
-	 * 
-	 * @param studentID
+	 * Loads the student's personal information from the database, assuming their ID has been
+	 * saved as an account.
+	 * @param studentID need this to correctly identify one student from another.
 	 */
 	public final void load(final int studentID) {
 		Database db = new Database();
@@ -216,7 +220,8 @@ public class Person {
 		}	
 	}
 	/**
-	 * 
+	 * Saves a student's personal information to the database once all categories of information
+	 * necessary are filled. This is NOT for saving exercises.
 	 */
 	public final void save() {
 		
@@ -242,7 +247,7 @@ public class Person {
 		}
 	}
 	/**
-	 * 
+	 * This will remove a student's personal information from the database.
 	 */
 	public final void delete() {
 		
@@ -257,7 +262,6 @@ public class Person {
 			
 	} catch (SQLException e) {
 		throw new RuntimeException("Something went wrong in deleting the student's information.");
-	}
-}
-	
+		}
+	}	
 }
