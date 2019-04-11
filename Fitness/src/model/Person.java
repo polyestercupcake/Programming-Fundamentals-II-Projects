@@ -320,7 +320,7 @@ public class Person {
 			params.add(new Parameter<String>(gender.toString()));
 			params.add(new Parameter<LocalDate>(birthdate));
 
-			db.executeSql("Exercise.usp_SavePerson", params);
+			db.executeSql("Exercise.usp_SavePersonWithoutDeleting", params);
 
 		} catch (SQLException e) {
 			e.printStackTrace();

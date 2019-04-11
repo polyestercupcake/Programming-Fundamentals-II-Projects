@@ -39,17 +39,17 @@
             <Font name="Book Antiqua" size="36.0" />
          </font>
       </Label>
-      <ImageView id="woman" fx:id="womanAvatar" fitHeight="258.0" fitWidth="165.0" layoutX="554.0" layoutY="107.0" pickOnBounds="true" preserveRatio="true" styleClass="application.css">
+      <ImageView id="woman" fx:id="womanAvatar" fitHeight="258.0" fitWidth="165.0" layoutX="629.0" layoutY="102.0" pickOnBounds="true" preserveRatio="true" styleClass="application.css">
          <image>
             <Image url="@woman.png" />
          </image>
       </ImageView>
-      <ImageView id="man" fx:id="manAvatar" fitHeight="271.0" fitWidth="231.0" layoutX="522.0" layoutY="99.0" pickOnBounds="true" preserveRatio="true" styleClass="application.css">
+      <ImageView id="man" fx:id="manAvatar" fitHeight="271.0" fitWidth="231.0" layoutX="597.0" layoutY="94.0" pickOnBounds="true" preserveRatio="true" styleClass="application.css">
          <image>
             <Image url="@man.png" />
          </image>
       </ImageView>
-      <ImageView id="unspec" fx:id="unspecifiedAvatar" fitHeight="297.0" fitWidth="254.0" layoutX="512.0" layoutY="111.0" pickOnBounds="true" preserveRatio="true" styleClass="application.css">
+      <ImageView id="unspec" fx:id="unspecifiedAvatar" fitHeight="297.0" fitWidth="254.0" layoutX="587.0" layoutY="106.0" pickOnBounds="true" preserveRatio="true" styleClass="application.css">
          <image>
             <Image url="@unspec.png" />
          </image>
@@ -87,15 +87,15 @@
                <font>
                   <Font name="Serif Regular" size="18.0" />
                </font></Label>
-            <Label text="Height" GridPane.rowIndex="5">
+            <Label text="Birthdate" GridPane.rowIndex="5">
                <font>
                   <Font name="Serif Regular" size="18.0" />
                </font></Label>
-            <Label text="Weight" GridPane.rowIndex="6">
+            <Label text="Height" GridPane.rowIndex="6">
                <font>
                   <Font name="Serif Regular" size="18.0" />
                </font></Label>
-            <Label text="Birthdate" GridPane.rowIndex="7">
+            <Label text="Weight" GridPane.rowIndex="7">
                <font>
                   <Font name="Serif Regular" size="18.0" />
                </font></Label>
@@ -103,9 +103,9 @@
             <TextField fx:id="txtFirstName" onKeyPressed="#disableSave" onKeyReleased="#disableSave" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="txtLastName" onKeyPressed="#disableSave" onKeyReleased="#disableSave" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <ComboBox fx:id="choiceGender" onAction="#disableSave" prefHeight="25.0" prefWidth="202.0" promptText="Please choose a gender" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <TextField fx:id="txtHeight" onKeyPressed="#disableSave" onKeyReleased="#disableSave" promptText="feet (.) inches" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <TextField fx:id="txtWeight" onKeyPressed="#disableSave" onKeyReleased="#disableSave" promptText="lbs" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <DatePicker fx:id="txtBirthdate" onKeyPressed="#disableSave" onKeyReleased="#disableSave" onMouseClicked="#disableSave" prefHeight="25.0" prefWidth="206.0" promptText="M/DD/YYYY" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <DatePicker fx:id="txtBirthdate" onKeyPressed="#disableSave" onKeyReleased="#disableSave" onMouseClicked="#disableSave" prefHeight="25.0" prefWidth="206.0" promptText="M/DD/YYYY" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="txtHeight" onKeyPressed="#disableSave" onKeyReleased="#disableSave" promptText="feet (.) inches" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <TextField fx:id="txtWeight" onKeyPressed="#disableSave" onKeyReleased="#disableSave" promptText="lbs" GridPane.columnIndex="1" GridPane.rowIndex="7" />
             <Button fx:id="btnLoadStudent" alignment="CENTER" mnemonicParsing="false" onAction="#handleLoad" prefHeight="25.0" prefWidth="161.0" style="-fx-background-color: gray; -fx-text-fill: white;" text="Load Student" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="10.0" />
@@ -130,6 +130,11 @@
                </font></Button>
          </children>
       </GridPane>
+      <CheckBox fx:id="chkbxDarkMode" layoutX="835.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleStyleChange" prefHeight="34.0" prefWidth="121.0" text="Dark Mode">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </CheckBox>
       <GridPane alignment="CENTER" layoutX="14.0" layoutY="428.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="258.0" prefWidth="963.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="565.0" minWidth="0.0" prefWidth="127.33333587646484" />
@@ -154,11 +159,6 @@
                   <Font name="Serif Regular" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="lblDate" prefHeight="20.0" prefWidth="148.0" GridPane.rowIndex="3">
-               <font>
-                  <Font name="Serif Regular" size="18.0" />
-               </font>
-            </Label>
             <RadioButton fx:id="radioAerobic" mnemonicParsing="false" onAction="#labelChange" onMouseClicked="#clearExerciseInfo" onMousePressed="#tabSelect" onMouseReleased="#tabSelect" text="Aerobic" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <font>
                   <Font name="Serif Regular" size="18.0" />
@@ -172,7 +172,11 @@
                   <Font name="Serif Regular" size="18.0" />
                </font>
             </RadioButton>
-            <DatePicker fx:id="txtExerciseDate" onKeyPressed="#disableAddRemoveButtons" onKeyReleased="#disableAddRemoveButtons" prefHeight="25.0" prefWidth="205.0" promptText="M/DD/YYYY" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label fx:id="lblDate" prefHeight="20.0" prefWidth="148.0" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Serif Regular" size="18.0" />
+               </font>
+            </Label>
             <Label fx:id="lblExerciseName" prefHeight="20.0" prefWidth="174.0" GridPane.rowIndex="4">
                <font>
                   <Font name="Serif Regular" size="18.0" />
@@ -198,6 +202,7 @@
                   <Font name="Serif Regular" size="18.0" />
                </font>
             </Label>
+            <DatePicker fx:id="txtExerciseDate" onKeyPressed="#disableAddRemoveButtons" onKeyReleased="#disableAddRemoveButtons" prefHeight="25.0" prefWidth="205.0" promptText="M/DD/YYYY" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField fx:id="txtExerciseName" onKeyPressed="#disableAddRemoveButtons" onKeyReleased="#disableAddRemoveButtons" prefHeight="25.0" prefWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <TextField fx:id="txtExerciseDuration" onKeyPressed="#disableAddRemoveButtons" onKeyReleased="#disableAddRemoveButtons" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <TextField fx:id="txtMaxHRorSets" onKeyPressed="#disableAddRemoveButtons" onKeyReleased="#disableAddRemoveButtons" GridPane.columnIndex="1" GridPane.rowIndex="6" />
@@ -255,21 +260,21 @@
       </GridPane>
       <Separator layoutX="163.0" layoutY="399.0" prefHeight="15.0" prefWidth="813.0" />
       <Separator layoutX="351.0" layoutY="93.0" prefHeight="15.0" prefWidth="628.0" />
-      <CheckBox fx:id="chkbxDarkMode" layoutX="809.0" layoutY="146.0" mnemonicParsing="false" onAction="#handleStyleChange" prefHeight="34.0" prefWidth="121.0" text="Dark Mode">
-         <font>
-            <Font name="System Bold" size="16.0" />
-         </font>
-      </CheckBox>
-      <Label fx:id="lblUserAge" layoutX="570.0" layoutY="353.0" prefHeight="57.0" prefWidth="161.0">
+      <Label fx:id="lblUserAge" layoutX="645.0" layoutY="348.0" prefHeight="57.0" prefWidth="161.0">
          <font>
             <Font name="Book Antiqua Bold" size="36.0" />
          </font>
       </Label>
-      <Label layoutX="805.0" layoutY="101.0" prefHeight="45.0" prefWidth="134.0" text="Preferences">
+      <Label layoutX="831.0" layoutY="8.0" prefHeight="45.0" prefWidth="134.0" text="Preferences">
          <font>
             <Font name="Book Antiqua" size="24.0" />
          </font>
       </Label>
-      <Separator layoutX="802.0" layoutY="139.0" prefHeight="15.0" prefWidth="136.0" />
+      <Separator layoutX="828.0" layoutY="46.0" prefHeight="15.0" prefWidth="136.0" />
+      <Label fx:id="lblAboutProgram" layoutX="503.0" layoutY="111.0" prefHeight="279.0" prefWidth="445.0" text="Welcome to the MyFitness fitness tracker! This program is designed for students to keep track of their fitness by storing various types of exercises in a database so they can track their progress. Before you are able to add or remove exercises, please either load your student account or create an account. Let's get to work!" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="Book Antiqua Bold" size="22.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
