@@ -69,16 +69,7 @@ public class Person {
 	public final void setStudentID(final int studentID) {
 		this.studentID = studentID;
 	}
-
-	/**
-	 * Gets all the exercises a student has.
-	 * 
-	 * @return the exercises
-	 */
-	public final List<Exercise> getExercises() {
-		return exercises;
-	}
-
+	
 	/**
 	 * Gets all the strength categorized exercises a student has.
 	 * 
@@ -208,7 +199,6 @@ public class Person {
 		Period p = Period.between(birthdate, LocalDate.now());
 		return p.getYears();
 	}
-
 	/**
 	 * Loads the student's personal information from the database, assuming their ID
 	 * has been saved as an account.
@@ -233,6 +223,7 @@ public class Person {
 				height = rsStudent.getDouble("height");
 				weight = rsStudent.getDouble("weight");
 				birthdate = LocalDate.parse(rsStudent.getString("birthdate"));
+				//could be wrong
 				exercises.clear();
 				loadAerobicExercise();
 				loadStrengthExercise();
@@ -244,7 +235,6 @@ public class Person {
 			throw new RuntimeException("Something went wrong in loading the student.");
 		}
 	}
-
 	/**
 	 * This will load the student's aerobic exercises from the database.
 	 */
@@ -277,9 +267,7 @@ public class Person {
 			e.printStackTrace();
 			throw new RuntimeException("Something went wrong in loading the aerobic exercise.");
 		}
-
 	}
-
 	/**
 	 * This will load the student's strength exercises from the database.
 	 */
@@ -312,7 +300,6 @@ public class Person {
 			throw new RuntimeException("Something went wrong in loading the aerobic exercise.");
 		}
 	}
-
 	/**
 	 * Saves a student's personal information to the database once all categories of
 	 * information necessary are filled. This is NOT for saving exercises.
@@ -340,7 +327,6 @@ public class Person {
 			throw new RuntimeException("Something went wrong in saving the student.");
 		}
 	}
-
 	/**
 	 * This will remove a student's personal information from the database.
 	 */

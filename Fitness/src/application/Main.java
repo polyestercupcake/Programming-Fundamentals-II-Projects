@@ -20,12 +20,12 @@ public class Main extends Application {
 			Parent root = FXMLLoader.load(getClass().getResource("/view/Fitness.fxml"));
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.getIcons().add(new Image("/application/icon.jpg"));
+			primaryStage.getIcons().add(new Image("/application/icon.png"));
 			//I titled my gui from here
 			primaryStage.setTitle("MyFitness");
 			primaryStage.centerOnScreen();
 			primaryStage.setWidth(1000);
-			primaryStage.setHeight(750);
+			primaryStage.setHeight(730);
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch (Exception e) {

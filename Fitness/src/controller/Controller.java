@@ -334,6 +334,9 @@ public class Controller {
 //sets the visible table according to the radio button
 		exerciseGroup.selectToggle(radioAerobic);
 		tabPane.getSelectionModel().select(aerobicTab);
+//disable add/remove buttons
+		btnAddExercise.setDisable(true);
+		btnRemoveExercise.setDisable(true);
 	}
 	/**
 	 * Changes the names of the exercise labels as the different types of exercises are
@@ -454,7 +457,11 @@ public class Controller {
 	 * Disables the add and remove exercise buttons until they are ready.
 	 */
 	@FXML private void disableAddRemoveButtons() {
-		if (txtExerciseName.getText().isEmpty() ||
+		if (aerobicTable.getSelectionModel().getSelectedItem() != null ||
+				strengthTable.getSelectionModel().getSelectedItem() != null) {
+			btnAddExercise.setDisable(false);
+			btnRemoveExercise.setDisable(false);
+		} else if (txtExerciseName.getText().isEmpty() ||
 				txtExerciseDate.getValue() == null ||
 				txtExerciseDuration.getText().isEmpty() ||
 				txtAvgHRorReps.getText().isEmpty() ||
@@ -554,7 +561,9 @@ public class Controller {
 		womanAvatar.setVisible(false);
 		unspecifiedAvatar.setVisible(false);
 		lblUserAge.setVisible(false);
-
+		aerobicTable.getItems().clear();
+		strengthTable.getItems().clear();
+		
 		// confirmation of save
 		Alert confirm = new Alert(AlertType.CONFIRMATION);
 		confirm.setTitle("Save Confirmed");
@@ -609,6 +618,7 @@ public class Controller {
 				txtDistanceorWeightLifted.clear();
 			}
 		labelChange();
+		toggleSelect();
 	}
 	/**
 	 * Simple method to break up the size of the add exercise method. It simply sets
@@ -632,6 +642,7 @@ public class Controller {
 	 * student's account.
 	 */
 	@FXML private void addStrengthInformation() {
+		
 		exerciseStrength.setStudentID(Integer.parseInt(txtStudentID.getText()));
 		exerciseStrength.setExerciseDate(txtExerciseDate.getValue());
 		exerciseStrength.setExerciseName(txtExerciseName.getText());
@@ -639,6 +650,14 @@ public class Controller {
 		exerciseStrength.setSets(Integer.parseInt(txtMaxHRorSets.getText()));
 		exerciseStrength.setReps(Integer.parseInt(txtAvgHRorReps.getText()));
 		exerciseStrength.setWeightLifted(Double.parseDouble(txtDistanceorWeightLifted.getText()));
+		
+		if(txtDistanceorWeightLifted.getText() == null) {
+			Alert badLuck = new Alert(AlertType.ERROR);
+			badLuck.setTitle("ERROR");
+			badLuck.setContentText("Cannot have a Weight Lifted of 0. If you lifted"
+					+ " bodyweight, enter 0.1 lbs.");
+			badLuck.showAndWait();
+		}
 		// save the exercise
 		exerciseStrength.save();
 	}
@@ -677,8 +696,8 @@ public class Controller {
 	} catch (IllegalArgumentException e) {
 		Alert badLuck = new Alert(AlertType.ERROR);
 		badLuck.setTitle("ERROR");
-		badLuck.setContentText("Please enter the exercise date and name, along with your student profile"
-				+ " loaded to delete an exercise.");
+		badLuck.setContentText("Either no student profile has been loaded or not all" 
+				+ " information necessary has been added in order to save an exercise.");
 		badLuck.showAndWait();
 		}
 	}
@@ -687,45 +706,40 @@ public class Controller {
 	 * weights.
 	 */
 	@FXML private void handleAddExercise() {
+		//adds an aerobic exercise
 		if (exerciseGroup.getSelectedToggle().equals(radioAerobic)) {
-			try {
+				//adds the exercise and refreshes the table
+				addAerobicInformation();
+				clearExerciseInfo();
+				aerobicTable.getItems().clear();
+				aerobicTable.getItems().addAll(myPerson.getExercisesAerobic());
+				handleLoad();
+				btnAddExercise.setDisable(true);
+				btnRemoveExercise.setDisable(true);
+				
 				// confirmation box
 				Alert confirm = new Alert(AlertType.CONFIRMATION);
 				confirm.setTitle("Confirmation");
 				confirm.setContentText("Your aerobic exercise" + " has been saved.");
 				confirm.showAndWait();
+		}
+		//adds a strength exercise
+		if (exerciseGroup.getSelectedToggle().equals(radioStrength)) {
+				
 				//adds the exercise and refreshes the table
-				addAerobicInformation();
+				addStrengthInformation();
 				clearExerciseInfo();
-				myPerson.loadAerobicExercise();
-				aerobicTable.getItems().clear();
-				aerobicTable.getItems().addAll(myPerson.getExercisesAerobic());
-			} catch (IllegalArgumentException e) {
-				Alert badLuck = new Alert(AlertType.ERROR);
-				badLuck.setTitle("ERROR");
-				badLuck.setContentText("No student profile has been loaded. Please load one to add an exercise.");
-				badLuck.showAndWait();
-				}
-		} else {
-			try {
+				strengthTable.getItems().clear();
+				strengthTable.getItems().addAll(myPerson.getExercisesStrength());
+				handleLoad();
+				btnAddExercise.setDisable(true);
+				btnRemoveExercise.setDisable(true);
+				
 				// confirmation box
 				Alert confirm = new Alert(AlertType.CONFIRMATION);
 				confirm.setTitle("Confirmation");
 				confirm.setContentText("Your strength exercise" + " has been saved.");
 				confirm.showAndWait();
-				//adds the exercise and refreshes the table
-				addStrengthInformation();
-				clearExerciseInfo();
-				myPerson.loadStrengthExercise();
-				strengthTable.getItems().clear();
-				strengthTable.getItems().addAll(myPerson.getExercisesStrength());
-			} catch (IllegalArgumentException e) {
-				Alert badLuck = new Alert(AlertType.ERROR);
-				badLuck.setTitle("ERROR");
-				badLuck.setContentText("No student profile has been loaded. "
-						+ "Please load one to add an exercise.");
-				badLuck.showAndWait();
-			}
 		}
 	}
 	/**
@@ -733,8 +747,6 @@ public class Controller {
 	 * weights.
 	 */
 	@FXML private void handleRemoveExercise() {
-		try {
-			aerobicTable.getSelectionModel().getSelectedItem();
 			// ALERT BOX
 			ButtonType yes = new ButtonType("Yes");
 			ButtonType no = new ButtonType("No");
@@ -743,28 +755,40 @@ public class Controller {
 			editable.setContentText("Are you sure you want to remove this exercise?" + " Click YES to delete"
 					+ " or NO to continue with your Fitness Tracker.");
 			editable.showAndWait().ifPresent(response -> {
-				if (response == yes) {
-					if (exerciseGroup.getSelectedToggle().equals(radioAerobic)) {
+			if (response == yes) {
+				if (exerciseGroup.getSelectedToggle().equals(radioAerobic)) {
 						aerobicDelete();
 						clearExerciseInfo();
-						myPerson.loadAerobicExercise();
 						aerobicTable.getItems().clear();
 						aerobicTable.getItems().addAll(myPerson.getExercisesAerobic());
-					} else {
+						handleLoad();
+						btnAddExercise.setDisable(true);
+						btnRemoveExercise.setDisable(true);
+						
+						// confirmation box
+						Alert confirm = new Alert(AlertType.CONFIRMATION);
+						confirm.setTitle("Confirmation");
+						confirm.setContentText("Your aerobic exercise" + " has been removed.");
+						confirm.showAndWait();
+					}
+				if (exerciseGroup.getSelectedToggle().equals(radioStrength)) {
 						strengthDelete();
 						clearExerciseInfo();
 						myPerson.loadStrengthExercise();
 						strengthTable.getItems().clear();
 						strengthTable.getItems().addAll(myPerson.getExercisesStrength());
-					}
+						handleLoad();
+						btnAddExercise.setDisable(true);
+						btnRemoveExercise.setDisable(true);
+						
+						// confirmation box
+						Alert confirm = new Alert(AlertType.CONFIRMATION);
+						confirm.setTitle("Confirmation");
+						confirm.setContentText("Your strength exercise" + " has been removed.");
+						confirm.showAndWait();
 				}
-			});
-		} catch (IllegalArgumentException e) {
-			Alert badLuck = new Alert(AlertType.ERROR);
-			badLuck.setTitle("ERROR");
-			badLuck.setContentText("No student profile has been loaded. Please load one to remove an exercise.");
-			badLuck.showAndWait();
-		}
+			}
+		});
 	}
 	/**
 	 * Once a student's exercises are loaded in the table view, if they click on an
@@ -793,17 +817,29 @@ public class Controller {
 		txtAvgHRorReps.setText(String.valueOf(strengthExerciseToEdit.getReps()));
 		txtDistanceorWeightLifted.setText(String.valueOf(strengthExerciseToEdit.getWeightLifted()));
 		}
+		
+		disableAddRemoveButtons();
 	}
 	/**
 	 * Error checking that aligns whatever tab or radio button is selected with the
 	 * labels and text fields.
 	 */
-	@FXML private void tabAvailable() {
+	@FXML private void tabSelect() {
 		if (exerciseGroup.getSelectedToggle().equals(radioAerobic)) {
 			tabPane.getSelectionModel().select(aerobicTab);
 		}
 		if (exerciseGroup.getSelectedToggle().equals(radioStrength)) {
 			tabPane.getSelectionModel().select(strengthTab);
+		}
+	}
+	/**
+	 * 
+	 */
+	@FXML private void toggleSelect() {
+		if (aerobicTab.isSelected()) {
+			exerciseGroup.selectToggle(radioAerobic);
+		} else {
+			exerciseGroup.selectToggle(radioStrength);
 		}
 	}
 	/**
@@ -817,3 +853,5 @@ public class Controller {
 		}
 	}
 }
+//PROBLEM: when I edit a user's personal information then save, it deletes all their exercises.
+//PROBLEM: enabling and disabling add/remove buttons
