@@ -1,8 +1,6 @@
 package model;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,22 +9,24 @@ import db.Database;
 import db.Parameter;
 
 /**
- * 
+ * This class contains all the information having to do with aerobic exercises.
+ * All information not here that is needed will be inside the Exercise class, which is
+ * extended by this class.
  * @author Tanner's Laptop
  *
  */
 public class ExerciseAerobic extends Exercise {
 	
 	/**
-	 * 
+	 * Max Heart Rate during the student's aerobic exercise.
 	 */
 	private int maxHeartRate;
 	/**
-	 * 
+	 * Average Heart Rate during the student's aerobic exercise.
 	 */
 	private int averageHeartRate;
 	/**
-	 * 
+	 * Distance traveled during the student's aerobic exercise.
 	 */
 	private double distance;
 
@@ -75,44 +75,6 @@ public class ExerciseAerobic extends Exercise {
 	@Override
 	public void load(final int studentID, final LocalDate exerciseDate, final String exerciseName) {	
 	}
-	/**
-	 * 
-	 * @param studentID
-	 * @return
-	 */
-	public List<ExerciseAerobic> loadAerobicExercise(final int studentID) {
-
-		Database db = new Database();
-		@SuppressWarnings("rawtypes")
-		List<Parameter> params = new ArrayList<>();
-		List<ExerciseAerobic> exerciseAerobic = new ArrayList<>();
-		
-		try {
-			//add parameters in the required order (see campusweb cheatsheet)
-			params.add(new Parameter<Integer>(studentID));
-			
-			ResultSet rsStudent = db.getResultSet("Exercise.usp_GetAerobicExercisesByPerson", params);
-			while (rsStudent.next()) {
-				ExerciseAerobic exAero = new ExerciseAerobic();
-				exAero.setStudentID(rsStudent.getInt("studentID"));
-				exAero.setExerciseDate(LocalDate.parse(rsStudent.getString("exerciseDate")));
-				exAero.setExerciseName(rsStudent.getString("exerciseName"));
-				exAero.setExerciseDuration(Duration.ofSeconds(Integer.parseInt(
-						rsStudent.getString("exerciseSeconds"))));
-				exAero.setMaxHeartRate(rsStudent.getInt("maxHeartRate"));
-				exAero.setAverageHeartRate(rsStudent.getInt("averageHeartRate"));
-				exAero.setDistance(rsStudent.getDouble("distance"));
-				
-				exerciseAerobic.add(exAero);
-			}
-			
-	} catch (SQLException e) {
-		e.printStackTrace();
-		throw new RuntimeException("Something went wrong in loading the aerobic exercise.");
-		}
-		return exerciseAerobic;	
-		
-	}
 
 	@Override
 	public final void save() {
@@ -137,7 +99,6 @@ public class ExerciseAerobic extends Exercise {
 			e.printStackTrace();
 			throw new RuntimeException("Something went wrong in saving the aerobic exercise.");
 		}
-		
 	}
 
 	@Override
@@ -149,7 +110,6 @@ public class ExerciseAerobic extends Exercise {
 		try {
 			//add parameters in the required order (see campusweb cheatsheet)
 			params.add(new Parameter<Integer>(studentID));
-			//not getting either of these
 			params.add(new Parameter<LocalDate>(exerciseDate));
 			params.add(new Parameter<String>(exerciseName));
 		

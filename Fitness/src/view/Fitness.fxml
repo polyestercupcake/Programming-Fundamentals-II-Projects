@@ -159,7 +159,7 @@
                   <Font name="Serif Regular" size="18.0" />
                </font>
             </Label>
-            <RadioButton fx:id="radioAerobic" mnemonicParsing="false" onAction="#labelChange" onMouseClicked="#labelChange" text="Aerobic" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+            <RadioButton fx:id="radioAerobic" mnemonicParsing="false" onAction="#labelChange" onMouseClicked="#clearExerciseInfo" onMousePressed="#tabAvailable" onMouseReleased="#tabAvailable" text="Aerobic" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <font>
                   <Font name="Serif Regular" size="18.0" />
                </font>
@@ -167,7 +167,7 @@
                   <ToggleGroup fx:id="exerciseGroup" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="radioStrength" mnemonicParsing="false" onAction="#labelChange" onMouseClicked="#labelChange" text="Weight Lifting" toggleGroup="$exerciseGroup" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <RadioButton fx:id="radioStrength" contentDisplay="CENTER" mnemonicParsing="false" onAction="#labelChange" onMouseClicked="#clearExerciseInfo" onMousePressed="#tabAvailable" onMouseReleased="#tabAvailable" text="Strength" toggleGroup="$exerciseGroup" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <font>
                   <Font name="Serif Regular" size="18.0" />
                </font>
@@ -219,32 +219,32 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <TabPane prefHeight="243.0" prefWidth="489.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.rowSpan="8">
+            <TabPane fx:id="tabPane" prefHeight="243.0" prefWidth="489.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.rowSpan="8">
               <tabs>
-                <Tab text="Aerobic">
+                <Tab fx:id="aerobicTab" onSelectionChanged="#clearExerciseInfo" text="Aerobic">
                      <content>
-                        <TableView fx:id="exerciseTable1" onMouseClicked="#populateExerciseInfo" prefHeight="200.0" prefWidth="475.0">
+                        <TableView fx:id="aerobicTable" onMouseClicked="#populateExerciseInfo" prefHeight="200.0" prefWidth="475.0">
                            <columns>
-                              <TableColumn fx:id="dateC21" prefWidth="102.0" text="Date" />
-                              <TableColumn fx:id="nameC31" prefWidth="91.0" text="Name" />
-                              <TableColumn fx:id="durationC41" prefWidth="69.0" text="Duration" />
-                              <TableColumn fx:id="maxHRorSetsC51" prefWidth="64.0" text="Max HR" />
-                              <TableColumn fx:id="avgHRorRepsC61" prefWidth="78.0" text="Avg HR" />
-                              <TableColumn fx:id="distanceorWeightLiftedC71" prefWidth="85.0" text="Distance" />
+                              <TableColumn fx:id="aerobicDateC1" prefWidth="102.0" text="Date" />
+                              <TableColumn fx:id="aerobicNameC2" prefWidth="91.0" text="Name" />
+                              <TableColumn fx:id="aerobicDurationC3" prefWidth="69.0" text="Duration" />
+                              <TableColumn fx:id="aerobicMaxHRC4" prefWidth="64.0" text="Max HR" />
+                              <TableColumn fx:id="aerobicAvgHRC5" prefWidth="78.0" text="Avg HR" />
+                              <TableColumn fx:id="aerobicDistanceC6" prefWidth="85.0" text="Distance" />
                            </columns>
                         </TableView>
                      </content>
                 </Tab>
-                <Tab text="Strength">
+                <Tab fx:id="strengthTab" onSelectionChanged="#clearExerciseInfo" text="Strength">
                      <content>
-                        <TableView fx:id="exerciseTable" onMouseClicked="#populateExerciseInfo" prefHeight="200.0" prefWidth="475.0">
+                        <TableView fx:id="strengthTable" onMouseClicked="#populateExerciseInfo" prefHeight="200.0" prefWidth="475.0">
                           <columns>
-                            <TableColumn fx:id="dateC2" prefWidth="104.0" text="Date" />
-                              <TableColumn fx:id="nameC3" prefWidth="89.0" text="Name" />
-                              <TableColumn fx:id="durationC4" prefWidth="69.0" text="Duration" />
-                              <TableColumn fx:id="maxHRorSetsC5" prefWidth="64.0" text="Sets" />
-                              <TableColumn fx:id="avgHRorRepsC6" prefWidth="65.0" text="Reps" />
-                              <TableColumn fx:id="distanceorWeightLiftedC7" prefWidth="98.0" text="Weight Lifted" />
+                            <TableColumn fx:id="strengthDateC1" prefWidth="104.0" text="Date" />
+                              <TableColumn fx:id="strengthNameC2" prefWidth="89.0" text="Name" />
+                              <TableColumn fx:id="strengthDurationC3" prefWidth="69.0" text="Duration" />
+                              <TableColumn fx:id="strengthSetsC4" prefWidth="64.0" text="Sets" />
+                              <TableColumn fx:id="strengthRepsC5" prefWidth="65.0" text="Reps" />
+                              <TableColumn fx:id="strengthWeightLiftedC6" prefWidth="98.0" text="Weight Lifted" />
                           </columns>
                         </TableView>
                      </content>

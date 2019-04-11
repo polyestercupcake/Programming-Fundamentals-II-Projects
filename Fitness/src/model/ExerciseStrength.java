@@ -1,8 +1,6 @@
 package model;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,22 +9,24 @@ import db.Database;
 import db.Parameter;
 
 /**
- * 
+ * This class contains all the information having to do with strength exercises.
+ * All information not here that is needed will be inside the Exercise class, which is
+ * extended by this class.
  * @author Tanner's Laptop
  *
  */
 public class ExerciseStrength extends Exercise {
 	
 	/**
-	 * 
+	 * Amount of sets completed during the student's strength exercise.
 	 */
 	private int sets;
 	/**
-	 * 
+	 * Amount of reps completed per set during the student's strength exercise.
 	 */
 	private int reps;
 	/**
-	 * 
+	 * Amount of weight lifted during the student's strength exercise.
 	 */
 	private double weightLifted;
 	
@@ -75,45 +75,8 @@ public class ExerciseStrength extends Exercise {
 	
 	@Override
 	public void load(final int studentID, final LocalDate exerciseDate, final String exerciseName) {
-		
 	}
 
-	/**
-	 * 
-	 * @param studentID
-	 * @return
-	 */
-	public List<ExerciseStrength> loadStrengthExercise(final int studentID) {
-
-		Database db = new Database();
-		@SuppressWarnings("rawtypes")
-		List<Parameter> params = new ArrayList<>();
-		List<ExerciseStrength> exerciseStrength = new ArrayList<>();
-		
-		try {
-			//add parameters in the required order (see campusweb cheatsheet)
-			params.add(new Parameter<Integer>(studentID));
-			ExerciseStrength exStr = new ExerciseStrength();
-			
-			ResultSet rsStudent = db.getResultSet("Exercise.usp_GetStrengthExercisesByPerson", params);
-			while (rsStudent.next()) {
-				exStr.setStudentID(rsStudent.getInt("studentID"));
-				exStr.setExerciseDate(LocalDate.parse(rsStudent.getString("exerciseDate")));
-				exStr.setExerciseName(rsStudent.getString("exerciseName"));
-				exStr.setExerciseDuration(Duration.ofSeconds(Integer.parseInt(
-						rsStudent.getString("exerciseSeconds"))));
-				exStr.setSets(rsStudent.getInt("sets"));
-				exStr.setReps(rsStudent.getInt("reps"));
-				exStr.setWeightLifted(rsStudent.getDouble("weightLifted"));
-				
-				exerciseStrength.add(exStr);
-				}	
-	} catch (SQLException e) {
-		e.printStackTrace();
-		throw new RuntimeException("Something went wrong in loading the aerobic exercise.");
-		}	
-		return exerciseStrength;
-	}
 
 	@Override
 	public final void save() {
@@ -136,8 +99,7 @@ public class ExerciseStrength extends Exercise {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new RuntimeException("Something went wrong in saving the strength exercise.");
-		}
-		
+		}	
 	}
 
 	@Override
@@ -158,7 +120,5 @@ public class ExerciseStrength extends Exercise {
 			e.printStackTrace();
 			throw new RuntimeException("Something went wrong in deleting the student's strength exercise.");
 		}
-		
 	}
-
 }
