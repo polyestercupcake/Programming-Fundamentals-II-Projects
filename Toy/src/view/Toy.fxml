@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="pane" prefHeight="567.0" prefWidth="645.0" style="-fx-background-color: #474747;" styleClass=".AnchorPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller">
+   <children>
+      <TextField fx:id="txtInspector" layoutX="241.0" layoutY="151.0" onKeyTyped="#disableSave" />
+      <TextField fx:id="txtToyID" layoutX="241.0" layoutY="191.0" onKeyPressed="#disableToyButtons" onKeyReleased="#disableToyButtons" />
+      <TextField fx:id="inspectionDateTime" disable="true" editable="false" layoutX="241.0" layoutY="229.0" promptText="&lt;calculated&gt;" />
+      <Pane layoutX="32.0" layoutY="279.0" prefHeight="215.0" prefWidth="272.0" style="-fx-border-color: white; -fx-border-width: 3px;">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" styleClass="labelHeader" text="Circuit 1:" textFill="#f2f0f0">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+            <Label fx:id="labelVoltage1" layoutX="25.0" layoutY="50.0" styleClass="labelHeader" text="Voltage:" textFill="#fcf7f7" />
+            <Label fx:id="labelResistance1" layoutX="25.0" layoutY="102.0" styleClass="labelHeader" text="Resistance:" textFill="#fcf7f7" />
+            <Label layoutX="77.0" layoutY="146.0" styleClass="labelHeader" text="Manufacture Location:" textFill="#fcf7f7" />
+            <TextField fx:id="txtVoltageCircuit1" layoutX="97.0" layoutY="46.0" onKeyTyped="#disableSave" />
+            <TextField fx:id="txtResistanceCircuit1" layoutX="97.0" layoutY="98.0" onKeyTyped="#disableSave" />
+          
+                  <RadioButton fx:id="radioGermanyCircuit1" layoutX="18.0" layoutY="175.0" mnemonicParsing="false" onAction="#disableSave" text="Germany" textFill="#f2f0f0">
+               <toggleGroup>
+                  <ToggleGroup fx:id="group1" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="radioChinaCircuit1" layoutX="97.0" layoutY="175.0" mnemonicParsing="false" onAction="#disableSave" text="China" textFill="#f2f0f0" toggleGroup="$group1" />
+            <RadioButton fx:id="radioUSCircuit1" layoutX="163.0" layoutY="175.0" mnemonicParsing="false" onAction="#disableSave" text="United States" textFill="#f2f0f0" toggleGroup="$group1" />
+         </children>
+      </Pane>
+      <Pane layoutX="344.0" layoutY="279.0" prefHeight="215.0" prefWidth="272.0" style="-fx-border-color: white; -fx-border-width: 3px;">
+         <children>
+            <Label layoutX="15.0" layoutY="14.0" styleClass="labelHeader" text="Circuit 2:" textFill="#f2f0f0">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+            <Label fx:id="labelVoltage2" layoutX="25.0" layoutY="49.0" styleClass="labelHeader" text="Voltage:" textFill="#fcf7f7" />
+            <Label fx:id="labelResistance2" layoutX="26.0" layoutY="104.0" styleClass="labelHeader" text="Resistance:" textFill="#fcf7f7" />
+            <Label layoutX="77.0" layoutY="146.0" styleClass="labelHeader" text="Manufacture Location:" textFill="#fcf7f7" />
+            <TextField fx:id="txtVoltageCircuit2" layoutX="98.0" layoutY="45.0" onKeyTyped="#disableSave" />
+            <TextField fx:id="txtResistanceCircuit2" layoutX="98.0" layoutY="97.0" onKeyTyped="#disableSave" />
+            <RadioButton fx:id="radioGermanyCircuit2" layoutX="15.0" layoutY="174.0" mnemonicParsing="false" onAction="#disableSave" text="Germany" textFill="#f2f0f0">
+               <toggleGroup>
+                  <ToggleGroup fx:id="group2" />
+               </toggleGroup></RadioButton>
+            <RadioButton fx:id="radioChinaCircuit2" layoutX="98.0" layoutY="174.0" mnemonicParsing="false" onAction="#disableSave" text="China" textFill="#f2f0f0" toggleGroup="$group2" />
+            <RadioButton fx:id="radioUSCircuit2" layoutX="166.0" layoutY="174.0" mnemonicParsing="false" onAction="#disableSave" text="United States" textFill="#f2f0f0" toggleGroup="$group2" />
+         </children>
+      </Pane>
+      <Label id="header" layoutX="32.0" layoutY="14.0" prefHeight="124.0" prefWidth="589.0" text="This form allows data entry on the Talking Salesman toy for quality control purposes. (All information is property of Kembell Berkstresser Enterprises. Only authorized employees may use this form.)" wrapText="true">
+         <font>
+            <Font name="Bookman Old Style" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="166.0" layoutY="147.0" prefHeight="31.0" prefWidth="69.0" styleClass="labelHeader" text="Inspector:" textFill="#fcf7f7">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Label layoutX="186.0" layoutY="194.0" styleClass="labelHeader" text="Toy ID:" textFill="#fcf7f7">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Label layoutX="98.0" layoutY="233.0" styleClass="labelHeader" text="Inspection Date/Time:" textFill="#fcf7f7">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Button fx:id="handleSave" layoutX="86.0" layoutY="511.0" mnemonicParsing="false" onAction="#handleSave" prefHeight="42.0" prefWidth="102.0" style="-fx-background-color: lightgray;" styleClass=".defaultButton" stylesheets="@../application/application.css" text="Save">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Button>
+      <Button fx:id="handleClear" cancelButton="true" layoutX="466.0" layoutY="511.0" mnemonicParsing="false" onAction="#handleClear" prefHeight="42.0" prefWidth="102.0" text="Clear">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Button>
+      <Button fx:id="handleLoadToyID" layoutX="401.0" layoutY="190.0" mnemonicParsing="false" onAction="#handleLoadToyID" text="Load Toy" />
+      <Button fx:id="handleDelete" layoutX="480.0" layoutY="189.0" mnemonicParsing="false" onAction="#handleDelete" prefHeight="25.0" prefWidth="77.0" text="Delete Toy" />
+   </children>
+</AnchorPane>
