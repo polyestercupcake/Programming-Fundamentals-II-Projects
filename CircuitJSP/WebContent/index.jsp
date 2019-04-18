@@ -17,31 +17,43 @@ anyway you would like.
 <br><br>
 First of all, please choose what you would like to calculate: Voltage, Amperage, or Resistance?
 <br><br>
-<form>
 <hr>
-Calculate:
-<br>
-<!-- Cannot figure out how to put a name by the check box -->
-<input type="checkbox" name="chkVoltage" title="Voltage">
-<input type="checkbox" value="Amperage" name="chkAmperage">
-<input type="checkbox" value="Resistance" name="chkResistance">
-<br>
+
+<form>
+		<div id="directions">
+			<h4 style="text-align:center"><u>Directions</u></h4>
+			<p>If calculating Voltage, please only enter values in the Amperage and Resistance fields.</p>
+			<p>If calculating Amperage, please only enter values in the Voltage and Resistance fields.</p>
+			<p>If calculating Resistance, please only enter values in the Voltage and Amperage fields.</p>
+		</div>
+	<h3>Calculate:</h3>
+	<input type="radio" name="ohmsLaw" value="Voltage" checked>
+		<label>Voltage</label>
+	<input type="radio" name="ohmsLaw" value="Amperage">
+		<label>Amperage</label>
+	<input type="radio" name="ohmsLaw" value="Resistance">
+		<label>Resistance</label>
+<br><br>
 <!-- Could use required input type as well -->
-	<input type="number" step="0.01" placeholder="[Enter Voltage Here]" name="txtVoltage">
-<br>
-	<input type="number" step="0.01" placeholder="[Enter Amperage Here]" name="txtAmperage">
-<br>
-	<input type="number" step="0.01" placeholder="[Enter Resistance Here]" name="txtResistance">
+	<input type="number" step="0.01" placeholder="[Enter Voltage]" name="txtVoltage">
+<br><br>
+	<input type="number" step="0.01" placeholder="[Enter Amperage]" name="txtAmperage">
+<br><br>
+	<input type="number" step="0.01" placeholder="[Enter Resistance]" name="txtResistance">
+<br><br>
 	<input type="submit" name="txtSubmit" value="Calculate">
+	<input type="reset" name="txtReset" value="Reset Form" onClick="window.location.reload()">
+
+	<%
+	Circuit myCircuit = new Circuit();
 	
-	<%Circuit myCircuit = new Circuit();
 	if (request.getParameter("txtSubmit") != null) {
-		if (request.getParameter("chkVoltage") != null) {
+		if (request.getParameter("ohmsLaw").equals("Voltage")) {
 			myCircuit.setAmperage(Double.parseDouble(request.getParameter("txtAmperage")));
 			myCircuit.setResistance(Double.parseDouble(request.getParameter("txtResistance")));
 			myCircuit.calcualteVoltage();
 			out.println("<br><br>The voltage is " + myCircuit.getVoltage()); 
-		} else if (request.getParameter("chkAmperage") != null) {
+		} else if (request.getParameter("ohmsLaw").equals("Amperage")) {
 			myCircuit.setVoltage(Double.parseDouble(request.getParameter("txtVoltage")));
 			myCircuit.setResistance(Double.parseDouble(request.getParameter("txtResistance")));
 			myCircuit.calcualteAmperage();
@@ -52,7 +64,14 @@ Calculate:
 			myCircuit.calcualteResistance();
 			out.println("<br><br>The resistance is " + myCircuit.getResistance());
 			}
-		}%>
+		}
+	
+		if (request.getParameter("txtReset") != null) {
+			out.println("");
+		}
+	%>
 </form>
+<br>
+<hr>
 </body>
 </html>
