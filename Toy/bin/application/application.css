@@ -1,0 +1,24 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+#header {
+	-fx-text-alignment: center;
+	-fx-background-color: white;
+	-fx-background-radius: 10, 10, 10, 10;
+	-fx-label-padding: 10, 40, 10, 40;
+}
+
+.labelHeader {
+	-fx-text-fill: white;
+	-fx-font-size: 14px;
+}
+
+#button {
+	-fx-color-label-visible: blue;
+}
+
+.AnchorPane {
+}
+/*
+ * How to incorporate a style sheet into a view
+String  style= getClass().getResource("New.css").toExternalForm();
+scene.getStylesheets().add(style) 
+*/

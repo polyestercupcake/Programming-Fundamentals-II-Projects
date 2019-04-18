@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="713.0" prefWidth="978.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller">
+   <children>
+      <Label layoutX="296.0" layoutY="8.0" prefHeight="57.0" prefWidth="445.0" text="FITNESS TRACKER" textAlignment="CENTER">
+         <font>
+            <Font name="Book Antiqua Bold" size="45.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="74.0" text="Personal Information">
+         <font>
+            <Font name="Book Antiqua" size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="381.0" text="Exercises">
+         <font>
+            <Font name="Book Antiqua" size="36.0" />
+         </font>
+      </Label>
+      <ImageView id="woman" fx:id="womanAvatar" fitHeight="258.0" fitWidth="165.0" layoutX="629.0" layoutY="102.0" pickOnBounds="true" preserveRatio="true" styleClass="application.css">
+         <image>
+            <Image url="@woman.png" />
+         </image>
+      </ImageView>
+      <ImageView id="man" fx:id="manAvatar" fitHeight="271.0" fitWidth="231.0" layoutX="597.0" layoutY="94.0" pickOnBounds="true" preserveRatio="true" styleClass="application.css">
+         <image>
+            <Image url="@man.png" />
+         </image>
+      </ImageView>
+      <ImageView id="unspec" fx:id="unspecifiedAvatar" fitHeight="297.0" fitWidth="254.0" layoutX="587.0" layoutY="106.0" pickOnBounds="true" preserveRatio="true" styleClass="application.css">
+         <image>
+            <Image url="@unspec.png" />
+         </image>
+      </ImageView>
+      <GridPane alignment="CENTER" layoutX="14.0" layoutY="138.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="223.0" prefWidth="573.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="565.0" minWidth="0.0" prefWidth="96.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="542.0" minWidth="10.0" prefWidth="206.0" />
+            <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="400.0" minWidth="10.0" prefWidth="279.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="52.0" minHeight="0.0" prefHeight="0.0" />
+            <RowConstraints maxHeight="58.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="33.0" minHeight="6.0" prefHeight="32.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Student ID" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Serif Regular" size="18.0" />
+               </font></Label>
+            <Label text="First Name" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Serif Regular" size="18.0" />
+               </font></Label>
+            <Label text="Last Name" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Serif Regular" size="18.0" />
+               </font></Label>
+            <Label text="Gender" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Serif Regular" size="18.0" />
+               </font></Label>
+            <Label text="Birthdate" GridPane.rowIndex="5">
+               <font>
+                  <Font name="Serif Regular" size="18.0" />
+               </font></Label>
+            <Label text="Height" GridPane.rowIndex="6">
+               <font>
+                  <Font name="Serif Regular" size="18.0" />
+               </font></Label>
+            <Label text="Weight" GridPane.rowIndex="7">
+               <font>
+                  <Font name="Serif Regular" size="18.0" />
+               </font></Label>
+            <TextField fx:id="txtStudentID" onKeyPressed="#disableButtons" onKeyReleased="#disableButtons" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="txtFirstName" onKeyPressed="#disableSave" onKeyReleased="#disableSave" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="txtLastName" onKeyPressed="#disableSave" onKeyReleased="#disableSave" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <ComboBox fx:id="choiceGender" onAction="#disableSave" prefHeight="25.0" prefWidth="202.0" promptText="Please choose a gender" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <DatePicker fx:id="txtBirthdate" onKeyPressed="#disableSave" onKeyReleased="#disableSave" onMouseClicked="#disableSave" prefHeight="25.0" prefWidth="206.0" promptText="M/DD/YYYY" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="txtHeight" onKeyPressed="#disableSave" onKeyReleased="#disableSave" promptText="feet (.) inches" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <TextField fx:id="txtWeight" onKeyPressed="#disableSave" onKeyReleased="#disableSave" promptText="lbs" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Button fx:id="btnLoadStudent" alignment="CENTER" mnemonicParsing="false" onAction="#handleLoad" prefHeight="25.0" prefWidth="161.0" style="-fx-background-color: gray; -fx-text-fill: white;" text="Load Student" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnSaveStudent" mnemonicParsing="false" onAction="#handleSave" prefWidth="161.0" style="-fx-background-color: gray; -fx-text-fill: white;" text="Save Student" GridPane.columnIndex="2" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Button>
+            <Button fx:id="btnDeleteStudent" mnemonicParsing="false" onAction="#handleDelete" prefWidth="161.0" style="-fx-background-color: gray; -fx-text-fill: white;" text="Delete Student" GridPane.columnIndex="2" GridPane.rowIndex="7">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Button>
+         </children>
+      </GridPane>
+      <CheckBox fx:id="chkbxDarkMode" layoutX="835.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleStyleChange" prefHeight="34.0" prefWidth="121.0" text="Dark Mode">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </CheckBox>
+      <GridPane alignment="CENTER" layoutX="14.0" layoutY="428.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="258.0" prefWidth="963.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="565.0" minWidth="0.0" prefWidth="127.33333587646484" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="542.0" minWidth="10.0" prefWidth="173.66665649414062" />
+            <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="542.0" minWidth="10.0" prefWidth="147.0" />
+            <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="542.0" minWidth="10.0" prefWidth="484.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="30.0" minHeight="0.0" prefHeight="0.0" />
+            <RowConstraints maxHeight="52.0" minHeight="0.0" prefHeight="30.0" />
+            <RowConstraints maxHeight="52.0" minHeight="0.0" prefHeight="0.0" />
+            <RowConstraints maxHeight="58.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="33.0" minHeight="6.0" prefHeight="32.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Label text="Exercise Type" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Serif Regular" size="18.0" />
+               </font>
+            </Label>
+            <RadioButton fx:id="radioAerobic" mnemonicParsing="false" onAction="#labelChange" onMouseClicked="#clearExerciseInfo" onMousePressed="#tabSelect" onMouseReleased="#tabSelect" text="Aerobic" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Serif Regular" size="18.0" />
+               </font>
+               <toggleGroup>
+                  <ToggleGroup fx:id="exerciseGroup" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="radioStrength" contentDisplay="CENTER" mnemonicParsing="false" onAction="#labelChange" onMouseClicked="#clearExerciseInfo" onMousePressed="#tabSelect" onMouseReleased="#tabSelect" text="Strength" toggleGroup="$exerciseGroup" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Serif Regular" size="18.0" />
+               </font>
+            </RadioButton>
+            <Label fx:id="lblDate" prefHeight="20.0" prefWidth="148.0" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Serif Regular" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblExerciseName" prefHeight="20.0" prefWidth="174.0" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Serif Regular" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblDuration" prefHeight="20.0" prefWidth="170.0" GridPane.rowIndex="5">
+               <font>
+                  <Font name="Serif Regular" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblMaxHRorSets" prefHeight="20.0" prefWidth="183.0" GridPane.rowIndex="6">
+               <font>
+                  <Font name="Serif Regular" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblAvgHRorReps" prefHeight="20.0" prefWidth="218.0" GridPane.rowIndex="7">
+               <font>
+                  <Font name="Serif Regular" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblDistanceorWeightLifted" prefHeight="20.0" prefWidth="222.0" GridPane.rowIndex="8">
+               <font>
+                  <Font name="Serif Regular" size="18.0" />
+               </font>
+            </Label>
+            <DatePicker fx:id="txtExerciseDate" onKeyPressed="#disableAddRemoveButtons" onKeyReleased="#disableAddRemoveButtons" prefHeight="25.0" prefWidth="205.0" promptText="M/DD/YYYY" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="txtExerciseName" onKeyPressed="#disableAddRemoveButtons" onKeyReleased="#disableAddRemoveButtons" prefHeight="25.0" prefWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="txtExerciseDuration" onKeyPressed="#disableAddRemoveButtons" onKeyReleased="#disableAddRemoveButtons" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="txtMaxHRorSets" onKeyPressed="#disableAddRemoveButtons" onKeyReleased="#disableAddRemoveButtons" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <TextField fx:id="txtAvgHRorReps" onKeyPressed="#disableAddRemoveButtons" onKeyReleased="#disableAddRemoveButtons" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <TextField fx:id="txtDistanceorWeightLifted" onKeyPressed="#disableAddRemoveButtons" onKeyReleased="#disableAddRemoveButtons" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <Button fx:id="btnAddExercise" alignment="CENTER" mnemonicParsing="false" onAction="#handleAddExercise" prefHeight="30.0" prefWidth="138.0" style="-fx-background-color: gray; -fx-text-fill: white;" text="Add Exercise" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets left="10.0" right="10.0" />
+               </GridPane.margin>
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRemoveExercise" mnemonicParsing="false" onAction="#handleRemoveExercise" prefHeight="30.0" prefWidth="139.0" style="-fx-background-color: gray; -fx-text-fill: white;" text="Remove Exercise" GridPane.columnIndex="2" GridPane.rowIndex="6">
+               <GridPane.margin>
+                  <Insets left="10.0" right="10.0" />
+               </GridPane.margin>
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <TabPane fx:id="tabPane" prefHeight="243.0" prefWidth="489.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.rowSpan="8">
+              <tabs>
+                <Tab fx:id="aerobicTab" onSelectionChanged="#clearExerciseInfo" text="Aerobic">
+                     <content>
+                        <TableView fx:id="aerobicTable" onMouseClicked="#populateExerciseInfo" prefHeight="200.0" prefWidth="475.0" style="-fx-background-color: lightgray;">
+                           <columns>
+                              <TableColumn fx:id="aerobicDateC1" prefWidth="102.0" text="Date" />
+                              <TableColumn fx:id="aerobicNameC2" prefWidth="91.0" text="Name" />
+                              <TableColumn fx:id="aerobicDurationC3" prefWidth="69.0" text="Duration" />
+                              <TableColumn fx:id="aerobicMaxHRC4" prefWidth="64.0" text="Max HR" />
+                              <TableColumn fx:id="aerobicAvgHRC5" prefWidth="78.0" text="Avg HR" />
+                              <TableColumn fx:id="aerobicDistanceC6" prefWidth="85.0" text="Distance" />
+                           </columns>
+                        </TableView>
+                     </content>
+                </Tab>
+                <Tab fx:id="strengthTab" onSelectionChanged="#clearExerciseInfo" text="Strength">
+                     <content>
+                        <TableView fx:id="strengthTable" onMouseClicked="#populateExerciseInfo" prefHeight="200.0" prefWidth="475.0" style="-fx-background-color: lightgray;">
+                          <columns>
+                            <TableColumn fx:id="strengthDateC1" prefWidth="104.0" text="Date" />
+                              <TableColumn fx:id="strengthNameC2" prefWidth="89.0" text="Name" />
+                              <TableColumn fx:id="strengthDurationC3" prefWidth="69.0" text="Duration" />
+                              <TableColumn fx:id="strengthSetsC4" prefWidth="64.0" text="Sets" />
+                              <TableColumn fx:id="strengthRepsC5" prefWidth="65.0" text="Reps" />
+                              <TableColumn fx:id="strengthWeightLiftedC6" prefWidth="98.0" text="Weight Lifted" />
+                          </columns>
+                        </TableView>
+                     </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+         </children>
+      </GridPane>
+      <Separator layoutX="163.0" layoutY="399.0" prefHeight="15.0" prefWidth="813.0" />
+      <Separator layoutX="351.0" layoutY="93.0" prefHeight="15.0" prefWidth="628.0" />
+      <Label fx:id="lblUserAge" layoutX="645.0" layoutY="348.0" prefHeight="57.0" prefWidth="161.0">
+         <font>
+            <Font name="Book Antiqua Bold" size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="831.0" layoutY="8.0" prefHeight="45.0" prefWidth="134.0" text="Preferences">
+         <font>
+            <Font name="Book Antiqua" size="24.0" />
+         </font>
+      </Label>
+      <Separator layoutX="828.0" layoutY="46.0" prefHeight="15.0" prefWidth="136.0" />
+      <Label fx:id="lblAboutProgram" layoutX="503.0" layoutY="111.0" prefHeight="279.0" prefWidth="445.0" text="Welcome to the MyFitness fitness tracker! This program is designed for students to keep track of their fitness by storing various types of exercises in a database so they can track their progress. Before you are able to add or remove exercises, please either load your student account or create an account. Let's get to work!" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="Book Antiqua Bold" size="22.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
