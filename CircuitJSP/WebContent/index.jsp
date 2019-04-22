@@ -21,7 +21,7 @@ First of all, please choose what you would like to calculate: Voltage, Amperage,
 
 <form>
 		<div id="directions">
-			<h4 style="text-align:center"><u>Directions</u></h4>
+			<h4>Directions</h4>
 			<p>If calculating Voltage, please only enter values in the Amperage and Resistance fields.</p>
 			<p>If calculating Amperage, please only enter values in the Voltage and Resistance fields.</p>
 			<p>If calculating Resistance, please only enter values in the Voltage and Amperage fields.</p>
@@ -42,7 +42,7 @@ First of all, please choose what you would like to calculate: Voltage, Amperage,
 	<input type="number" step="0.01" placeholder="[Enter Resistance]" name="txtResistance">
 <br><br>
 	<input type="submit" name="txtSubmit" value="Calculate">
-	<input type="reset" name="txtReset" value="Reset Form" onClick="window.location.reload()">
+	<input type="submit" name="txtReset" value="Reset Form">
 
 	<%
 	Circuit myCircuit = new Circuit();
@@ -64,10 +64,6 @@ First of all, please choose what you would like to calculate: Voltage, Amperage,
 			myCircuit.calcualteResistance();
 			out.println("<br><br>The resistance is " + myCircuit.getResistance());
 			}
-		}
-	
-		if (request.getParameter("txtReset") != null) {
-			out.println("");
 		}
 	%>
 </form>
