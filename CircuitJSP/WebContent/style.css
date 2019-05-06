@@ -11,39 +11,26 @@ body {
 }
 
 input[type=submit] {
-	font-size:20px;
+	font-size:28px;
 	background-color: red;
 	font-weight:bold;
+	height: 50px;
+	width: 175px;
 }
 
 input[type=submit]:hover {
 	 background-color:green;
 }
 
-input[type=reset] {
-	font-size:20px;
-	background-color: red;
-	font-weight:bold;
-	margin-left:50px;
-}
-
-input[type=reset]:hover {
-	 background-color:green;
-}
-
 form {
-	padding-left:20px;
-}
-
-input[type=radio] {
-  height: 25px;
-  width: 25px;
-  border-radius: 75%;
+	padding-left:150px;
 }
 
 input[type=number] {
-	height:20px;
+	height:50px;
 	width: 250px;
+	font-size: 24px;
+	padding-left: 25px;
 }
 
 #directions {

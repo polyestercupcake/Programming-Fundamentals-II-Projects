@@ -16,13 +16,10 @@
 	<br> Welcome to the Ohm's Law calculator! This webpage is designed
 	to help you calculate Ohm's Law anyway you would like.
 	<br>
-	<br> First of all, please choose what you would like to calculate:
-	Voltage, Amperage, or Resistance?
-	<br>
 	<br>
 	<hr>
 	<!-- method=get sticks it into the url (user, passw, values) and method=post will not (hides data) -->
-	<form method=post>
+	
 		<div id="directions">
 			<h4>Directions</h4>
 			<p>If calculating Voltage, please only enter values in the
@@ -31,15 +28,17 @@
 				Voltage and Resistance fields.</p>
 			<p>If calculating Resistance, please only enter values in the
 				Voltage and Amperage fields.</p>
+			<p>Click the Calculate button when you're ready to submit your values or the Reset button to reset the program.</p>
 		</div>
 
-		<br> <br> <br> <br>
+		<br> <br> <br>
+	<form method=post>
 		<!-- Could use required input type as well -->
-		<input type="number" step="0.01" placeholder="[Enter Voltage]"
+		<input type="number" step="0.01" placeholder="Enter Voltage"
 			name="txtVoltage"> <br> <br> <input type="number"
-			step="0.01" placeholder="[Enter Amperage]" name="txtAmperage">
+			step="0.01" placeholder="Enter Amperage" name="txtAmperage">
 		<br> <br> <input type="number" step="0.01"
-			placeholder="[Enter Resistance]" name="txtResistance"> <br>
+			placeholder="Enter Resistance" name="txtResistance"> <br>
 		<br> <input type="submit" name="txtSubmit" value="Calculate">
 		<input type="submit" name="txtReset" value="Reset Form">
 		
@@ -51,7 +50,7 @@
 		</c:if>
 		
 	</form>
-	<br>
+	<br><br>
 	<hr>
 </body>
 </html>
