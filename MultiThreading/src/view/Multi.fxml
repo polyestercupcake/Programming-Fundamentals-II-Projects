@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller">
+   <top>
+      <Label text="Database Query Tool (Sample)" BorderPane.alignment="CENTER" />
+   </top>
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Query to Execute" />
+            <TextArea fx:id="txtQuery" prefHeight="200.0" prefWidth="200.0" promptText="Enter SQL query here" text="SELECT * FROM ADMIN;" />
+            <Label text="Query Results" />
+            <TextArea fx:id="txtAnswer" editable="false" prefHeight="200.0" prefWidth="200.0" promptText="Query results will appear here" />
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="26.0" prefWidth="600.0" spacing="100.0" BorderPane.alignment="BOTTOM_CENTER">
+         <children>
+            <Button cancelButton="true" mnemonicParsing="false" onAction="#handleClear" text="Clear" />
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#handleQuery" prefHeight="26.0" prefWidth="164.0" text="Query Database" />
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>
